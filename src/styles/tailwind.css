@@ -1,0 +1,36 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.wtf-dark {
+	background-color: #212121 !important;
+	color: white !important;
+}
+
+.wtf-dark * {
+	color: white !important;
+}
+
+.h-full {
+	transition: all 0.4s ease;
+}
+.img-game:hover {
+	transform: scale(1.1);
+	transition: all 0.5s ease;
+}
+
+.wtf-lg {
+	position: relative;
+	width: 100%;
+	padding-bottom: 56.25%;
+	height: 0;
+}
+.wtf-lg iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
