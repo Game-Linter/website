@@ -21,7 +21,7 @@ const Navbar: () => JSX.Element = () => {
 				<Link href="/">
 					<a className="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
 						<img
-							src={'https://game-linter.com/static/media/logoalso.1b70fb49.png'}
+							src={'/logoalso.png'}
 							alt=""
 							className="w-16 h-16 text-white p-2 rounded-full"
 						/>

@@ -18,7 +18,7 @@ function Request() {
 		setIsSending(true);
 		let token = document
 			.querySelector("meta[name='csrf-token']")
-			.getAttribute('content');
+			?.getAttribute('content');
 		await axios
 			.post(
 				'https://game-linter.com/api/mailer',

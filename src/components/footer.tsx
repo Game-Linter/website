@@ -10,7 +10,7 @@ export default () => {
 						justify-center text-gray-900"
 					>
 						<img
-							src={'https://game-linter.com/static/media/logoalso.1b70fb49.png'}
+							src={'/logoalso.png'}
 							className="w-12 h-12 text-white p-2 rounded-full"
 							alt=""
 						/>

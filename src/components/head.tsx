@@ -28,7 +28,7 @@ const HeadElement = ({
 	return (
 		<Head>
 			<title>Game-Linter</title>
-			<link rel="icon" href="/favicon.ico" />
+			<link rel="shortcut icon" href="logo.jpg" type="image/x-icon" />
 			<link rel="dns-prefetch" href="https://s3.game-linter.com/" />
 			<meta
 				name="description"
@@ -40,6 +40,11 @@ const HeadElement = ({
 						  ' free Torrent from game-linter.com, Tested and Working 100%'
 				}
 			/>
+			<script
+				data-ad-client="ca-pub-1032102225919169"
+				async
+				src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+			></script>
 			<meta name="csrf-token" content={token} />
 			<meta
 				name="keywords"

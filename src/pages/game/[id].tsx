@@ -145,7 +145,7 @@ export default ({
 	const HandleClick = async () => {
 		let token = document
 			.querySelector('meta[name="csrf-token"]')
-			.getAttribute('content');
+			?.getAttribute('content');
 		Axios.patch(
 			'https://api.game-linter.com/increment',
 			qs.stringify({
@@ -373,7 +373,7 @@ export default ({
 													headers: {
 														'X-CSRF-Token': document
 															.querySelector("meta[name='csrf-token']")
-															.getAttribute('content'),
+															?.getAttribute('content'),
 													},
 													withCredentials: true,
 												}
