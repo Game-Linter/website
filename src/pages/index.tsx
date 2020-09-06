@@ -1,71 +1,89 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import Head from 'next/head';
+import HeadElement from '../components/head';
 import Carousel from '../components/carousel';
 import Layout from '../components/layout';
-
-interface TResponse {
-	title: string;
-	img: string;
-	id: string;
-	kebabTitle: string;
-	webp: string;
-}
+import Banner from '../components/darkmodeBanner';
+import Search from '../components/search';
+import useToken from '../actions/getToken';
+import {
+	useEffect,
+	useState,
+	useCallback,
+	useRef,
+	MutableRefObject,
+} from 'react';
+import Highlights from '../components/highlights';
+import TopDownloads from '../components/topDownloads';
+import Display from '../components/display';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-	const pics = await fetch('https://api.game-linter.com/games')
-		.then((res) => res.json())
-		.then((res) => res.pics as TResponse);
-
+	const { pics, resp, popu, feat, _csrf } = await fetch(
+		'https://api.game-linter.com/games'
+	).then((res) => res.json());
 	return {
 		props: {
 			pics,
+			token: _csrf,
+			resp,
+			popu,
+			feat,
 		},
-		revalidate: 3600,
+		revalidate: 1,
 	};
 };
 
 export default function Home({
 	pics,
+	token,
+	resp,
+	popu,
+	feat,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+	const [games, setGames] = useState([]);
+	const [search, setSearch] = useState<string>('');
+	const [visible, setVisible] = useState<boolean>(false);
+	const [lmao, setToken] = useToken();
+
+	const observer: MutableRefObject<any> = useRef();
+	const Loading = useCallback((node) => {
+		if (observer.current) {
+			observer.current.disconnect();
+		}
+		observer.current = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting) {
+				setVisible(true);
+			}
+		});
+		if (node && observer.current && observer) {
+			observer.current.observe(node);
+		}
+	}, []);
+
+	useEffect(() => {
+		setGames(resp);
+		setToken(token);
+	}, []);
 	return (
 		<div>
-			<Head>
-				<title>Game-Linter</title>
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
+			<HeadElement token={token} index />
 			<main>
 				<Layout>
-					<div className="card-body p-5">
-						<div className="container mx-auto px-4">
-							<div className="bg-indigo-200 text-center lg:py-4 md:py-4 lg:px-4 lg:rounded md:rounded sm:rounded">
-								<div
-									className="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full md:rounded-full flex lg:inline-flex  md:inline-flex"
-									role="alert"
-								>
-									<span className="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">
-										New
-									</span>
-									<span
-										className="font-semibold mr-2 text-left flex-auto cursor-pointer"
-										onClick={() => {
-											window.localStorage.setItem('myTheme', 'dark');
-											return window.location.reload();
-										}}
-									>
-										Check out the New Dark Mode
-									</span>
-									<svg
-										className="fill-current opacity-75 h-4 w-4"
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 20 20"
-									>
-										<path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z" />
-									</svg>
-								</div>
-							</div>
-						</div>
-					</div>
+					<Banner />
 					<Carousel pics={pics} />
+					<Highlights feat={feat} />
+					<TopDownloads popu={popu} />
+					<Search
+						search={search}
+						setSearch={setSearch}
+						games={games}
+						setNewGames={setGames}
+					/>
+					<Display
+						games={games}
+						search={search}
+						loading={Loading}
+						visible={visible}
+					/>
 				</Layout>
 			</main>
 		</div>

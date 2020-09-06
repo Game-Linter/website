@@ -1,9 +1,11 @@
 import { InferGetStaticPropsType, GetStaticPaths, GetStaticProps } from 'next';
 import Layout from '../../components/layout';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, RefObject } from 'react';
 import Axios from 'axios';
 import { toast } from 'react-toastify';
 import qs from 'querystring';
+import HeadElement from '../../components/head';
+import useToken from '../../actions/getToken';
 
 type IParamURI = { params: { id: string } };
 interface IReturnValue {
@@ -19,6 +21,8 @@ interface IReturnValue {
 	comments: { content: string }[];
 	count: number;
 	WebpThumb: string;
+	info: string;
+	genre: string;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -56,6 +60,7 @@ export const getStaticProps: GetStaticProps<IReturnValue> = async ({
 		title,
 		trailerlink,
 		WebpThumb,
+		genre,
 	} = data.resp as IReturnValue;
 
 	// Pass data to the page via props
@@ -73,6 +78,8 @@ export const getStaticProps: GetStaticProps<IReturnValue> = async ({
 			title,
 			trailerlink,
 			WebpThumb,
+			info: data.info,
+			genre,
 		},
 		revalidate: 3600,
 	};
@@ -91,8 +98,13 @@ export default ({
 	title,
 	trailerlink,
 	WebpThumb,
+	info,
+	genre,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const messageRef = React.createRef();
+	const messageRef: RefObject<any> = React.createRef();
+
+	const [acomment, setAcomment] = useState<string>('');
+	const [token, setToken] = useToken();
 
 	useEffect(() => {
 		const portalRoot = document.getElementById('portal');
@@ -165,258 +177,281 @@ export default ({
 			}
 		);
 	};
+
+	const data: IReturnValue = {
+		thumbnail,
+		backgroundimg,
+		comments,
+		count,
+		files,
+		kebabTitle,
+		magnetlink,
+		review,
+		size,
+		title,
+		trailerlink,
+		WebpThumb,
+		info,
+		genre,
+	};
 	return (
-		<Layout>
-			<div id="blur" className="flex-wrap">
-				<div style={{ display: 'block' }}>
-					<section className="text-gray-700 body-font">
-						<div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-							<div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
-								{thumbnail ? (
-									<picture>
-										<source
-											srcSet={WebpThumb.replace('.jpeg', '.webp')}
-											type="image/webp"
-										/>
-										<source srcSet={thumbnail} type="image/jpeg" />
-										<img
-											className="object-cover object-center rounded"
-											alt={title}
-											src={thumbnail}
-											onDragStart={(e) => e.preventDefault()}
-										/>
-									</picture>
-								) : (
-									''
-								)}
-							</div>
-							<div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-								<h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-200 underline">
-									{title}
-								</h1>
-								<p className="mb-8 leading-relaxed text-white">
-									Info hash: {''}
-								</p>
-								<div className="flex justify-center">
-									<button
-										// onClick={() =>
-										// 	messageRef.current.scrollIntoView({ behavior: 'smooth' })
-										// }
-										className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-									>
-										Scroll to Bottom
-									</button>
-									<button
-										onClick={share}
-										className="ml-4 inline-flex  bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-oroange-600 rounded text-lg"
-										style={{
-											color: 'black ',
-										}}
-									>
-										Share This page
-									</button>
-								</div>
-							</div>
-						</div>
-					</section>
-				</div>
-				<section className="text-gray-700 body-font">
-					<div className="container px-5 py-24 mx-auto">
-						<div className="flex flex-wrap -m-4 text-center">
-							<div className="p-4 sm:w-1/4 w-1/2">
-								<h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-200">
-									{count}
-								</h2>
-								<p className="leading-relaxed font-bold text-pink-200">
-									Downloads
-								</p>
-							</div>
-							<div className="p-4 sm:w-1/4 w-1/2">
-								<h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-200">
-									{comments?.length}
-								</h2>
-								<p className="leading-relaxed text-shadow font-bold text-pink-200">
-									Comments
-								</p>
-							</div>
-							<div className="p-4 sm:w-1/4 w-1/2">
-								<h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-200">
-									{review ? review + ' %' : ''}
-								</h2>
-								<p className="leading-relaxed font-bold text-pink-200">
-									Reviews
-								</p>
-							</div>
-							<div className="p-4 sm:w-1/4 w-1/2">
-								<h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-200">
-									{size ? size + ' GB' : ''}
-								</h2>
-								<p className="leading-relaxed font-bold text-pink-200">Size</p>
-							</div>
-						</div>
-					</div>
-				</section>
-				<div>
-					<section className="text-gray-700 body-font">
-						<div className="container px-5 py-24 mx-auto flex flex-col">
-							<div className="lg:w-6/6 mx-auto w-full">
-								<div className="rounded-lg h-auto overflow-hidden wtf-lg">
-									<iframe
-										width="1010"
-										height="616"
-										src={trailerlink}
-										frameBorder="0"
-										allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-										allowFullScreen
-										className="mx-auto"
-									></iframe>
-								</div>
-							</div>
-							<div className="lg:w-6/6 mx-auto mt-8 w-full">
-								<div className="rounded-lg h-auto overflow-hidden wtf-lg">
-									<iframe
-										width="1010"
-										height="616"
-										src="https://www.youtube.com/embed/3Lc2QmykQWY"
-										frameBorder="0"
-										allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-										allowFullScreen
-										className="mx-auto"
-									></iframe>
-								</div>
-							</div>
-						</div>
-					</section>
-				</div>
-				<div className="flex justify-center">
-					<button
-						onClick={HandleClick}
-						type="button"
-						// ref={messageRef}
-						className="bg-gray-500 hover:bg-gray-600 font-bold py-2 px-4 rounded inline-flex items-center mr-4 mb-4"
-					>
-						<svg
-							className="fill-current w-4 h-4 mr-2"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-						>
-							<path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-						</svg>
-						<span>Free Download</span>
-					</button>
-					<a
-						href={'https://www.g2a.com/search?query=' + kebabTitle}
-						type="button"
-						className="bg-green-500 hover:bg-green-600 font-bold py-2 px-4 rounded inline-flex items-center mr-4 mb-4"
-						target="__blank"
-					>
-						<svg
-							className="fill-current w-4 h-4 mr-2"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-						>
-							<path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-						</svg>
-						<span>Buy Game</span>
-					</a>
-				</div>
-				<hr style={{ backgroundColor: 'lightgray', marginBottom: '1em' }} />
-				<div className="row">
-					<div className="col-md-8">
-						<div className="form-group">
-							<section className="text-gray-700 body-font relative">
-								<form
-								// onSubmit={(e) => {
-								// 	e.preventDefault();
-								// 	Axios.post(
-								// 		'https://api.game-linter.com/submit-comment',
-								// 		qs.stringify({
-								// 			gameId: match.params.id,
-								// 			content: Acomment,
-								// 		}),
-								// 		{
-								// 			headers: {
-								// 				'X-CSRF-Token': document
-								// 					.querySelector("meta[name='csrf-token']")
-								// 					.getAttribute('content'),
-								// 			},
-								// 			withCredentials: true,
-								// 		}
-								// 	)
-								// 		.then(() => {
-								// 			toast.success('Submitted');
-								// 			const A = Acomment;
-								// 			setComments([
-								// 				...comments,
-								// 				{
-								// 					content: A,
-								// 				},
-								// 			]);
-								// 			setAcomment('');
-								// 		})
-								// 		.catch(() => toast.warn('Something went wrong'));
-								// }}
-								>
-									<div className="container px-5 py-24 mx-auto">
-										<div className="lg:w-1/2 md:w-2/3 mx-auto">
-											<div className="flex flex-wrap -m-2">
-												<div className="p-2 w-full text-black">
-													<textarea
-														className="w-full text-black bg-gray-100 rounded border border-gray-400 focus:outline-none h-48 focus:border-indigo-500 text-base px-4 py-2 resize-none block"
-														placeholder="Leave a comment"
-														required
-														// onChange={(e) => setAcomment(e.target.value)}
-														defaultValue={''}
-														value={''}
-													/>
-												</div>
-												<div className="p-2 w-full">
-													<button className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-														Post
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</form>
-							</section>
-						</div>
-						<div className="flex flex-col text-center w-full mb-12">
-							<h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-300">
-								Comments:
-							</h1>
-						</div>
-						<section className="text-gray-700 body-font overflow-hidden">
-							<div className="container px-5 py-24 mx-auto">
-								<div className="-my-8">
-									{comments?.length ? (
-										<div className="h-1 w-20 bg-indigo-500 rounded mb-8"></div>
+		<>
+			<HeadElement index={false} data={data} token={token} />
+			<Layout>
+				<div id="blur" className="flex-wrap">
+					<div style={{ display: 'block' }}>
+						<section className="text-gray-700 body-font">
+							<div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+								<div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+									{thumbnail ? (
+										<picture>
+											<source
+												srcSet={WebpThumb.replace('.jpeg', '.webp')}
+												type="image/webp"
+											/>
+											<source srcSet={thumbnail} type="image/jpeg" />
+											<img
+												className="object-cover object-center rounded"
+												alt={title}
+												src={thumbnail}
+												onDragStart={(e) => e.preventDefault()}
+											/>
+										</picture>
 									) : (
 										''
 									)}
-									<div className="container mx-auto px-4">
-										{comments?.map((value, index) => (
-											<div className="bg-teal-100 text-center lg:py-4 md:py-4 lg:px-4 rounded my-4">
-												<div
-													className="p-2 bg-gray-700 items-center text-indigo-100 leading-none lg:rounded-full md:rounded-full flex lg:inline-flex  md:inline-flex"
-													role="alert"
-												>
-													<span className="flex rounded-full bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3">
-														{index + 1}
-													</span>
-													<span className="font-semibold mr-2 text-left flex-auto">
-														{value.content}
-													</span>
-												</div>
-											</div>
-										))}
+								</div>
+								<div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+									<h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-200 underline">
+										{title}
+									</h1>
+									<p className="mb-8 leading-relaxed text-white">
+										Info hash: {info}
+									</p>
+									<div className="flex justify-center">
+										<button
+											onClick={() =>
+												messageRef.current.scrollIntoView({
+													behavior: 'smooth',
+												})
+											}
+											className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+										>
+											Scroll to Bottom
+										</button>
+										<button
+											onClick={share}
+											className="ml-4 inline-flex  bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-oroange-600 rounded text-lg"
+											style={{
+												color: 'black ',
+											}}
+										>
+											Share This page
+										</button>
 									</div>
 								</div>
 							</div>
 						</section>
 					</div>
+					<section className="text-gray-700 body-font">
+						<div className="container px-5 py-24 mx-auto">
+							<div className="flex flex-wrap -m-4 text-center">
+								<div className="p-4 sm:w-1/4 w-1/2">
+									<h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-200">
+										{count}
+									</h2>
+									<p className="leading-relaxed font-bold text-pink-200">
+										Downloads
+									</p>
+								</div>
+								<div className="p-4 sm:w-1/4 w-1/2">
+									<h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-200">
+										{comments?.length}
+									</h2>
+									<p className="leading-relaxed text-shadow font-bold text-pink-200">
+										Comments
+									</p>
+								</div>
+								<div className="p-4 sm:w-1/4 w-1/2">
+									<h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-200">
+										{review ? review + ' %' : ''}
+									</h2>
+									<p className="leading-relaxed font-bold text-pink-200">
+										Reviews
+									</p>
+								</div>
+								<div className="p-4 sm:w-1/4 w-1/2">
+									<h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-200">
+										{size ? size + ' GB' : ''}
+									</h2>
+									<p className="leading-relaxed font-bold text-pink-200">
+										Size
+									</p>
+								</div>
+							</div>
+						</div>
+					</section>
+					<div>
+						<section className="text-gray-700 body-font">
+							<div className="container px-5 py-24 mx-auto flex flex-col">
+								<div className="lg:w-6/6 mx-auto w-full">
+									<div className="rounded-lg h-auto overflow-hidden wtf-lg">
+										<iframe
+											width="1010"
+											height="616"
+											src={trailerlink}
+											frameBorder="0"
+											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+											allowFullScreen
+											className="mx-auto"
+										></iframe>
+									</div>
+								</div>
+								<div className="lg:w-6/6 mx-auto mt-8 w-full">
+									<div className="rounded-lg h-auto overflow-hidden wtf-lg">
+										<iframe
+											width="1010"
+											height="616"
+											src="https://www.youtube.com/embed/3Lc2QmykQWY"
+											frameBorder="0"
+											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+											allowFullScreen
+											className="mx-auto"
+										></iframe>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+					<div className="flex justify-center">
+						<button
+							onClick={HandleClick}
+							type="button"
+							ref={messageRef}
+							className="bg-gray-500 hover:bg-gray-600 font-bold py-2 px-4 rounded inline-flex items-center mr-4 mb-4"
+						>
+							<svg
+								className="fill-current w-4 h-4 mr-2"
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 20 20"
+							>
+								<path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+							</svg>
+							<span>Free Download</span>
+						</button>
+						<a
+							href={'https://www.g2a.com/search?query=' + kebabTitle}
+							type="button"
+							className="bg-green-500 hover:bg-green-600 font-bold py-2 px-4 rounded inline-flex items-center mr-4 mb-4"
+							target="__blank"
+						>
+							<svg
+								className="fill-current w-4 h-4 mr-2"
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 20 20"
+							>
+								<path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+							</svg>
+							<span>Buy Game</span>
+						</a>
+					</div>
+					<hr style={{ backgroundColor: 'lightgray', marginBottom: '1em' }} />
+					<div className="row">
+						<div className="col-md-8">
+							<div className="form-group">
+								<section className="text-gray-700 body-font relative">
+									<form
+										onSubmit={(e) => {
+											e.preventDefault();
+											Axios.post(
+												'https://api.game-linter.com/submit-comment',
+												qs.stringify({
+													gameId: kebabTitle,
+													content: acomment,
+												}),
+												{
+													headers: {
+														'X-CSRF-Token': document
+															.querySelector("meta[name='csrf-token']")
+															.getAttribute('content'),
+													},
+													withCredentials: true,
+												}
+											)
+												.then(() => {
+													toast.success('Submitted');
+													comments = [
+														...comments,
+														{
+															content: acomment,
+														},
+													];
+													setAcomment('');
+												})
+												.catch(() => toast.warn('Something went wrong'));
+										}}
+									>
+										<div className="container px-5 py-24 mx-auto">
+											<div className="lg:w-1/2 md:w-2/3 mx-auto">
+												<div className="flex flex-wrap -m-2">
+													<div className="p-2 w-full text-black">
+														<textarea
+															className="w-full text-black bg-gray-100 rounded border border-gray-400 focus:outline-none h-48 focus:border-indigo-500 text-base px-4 py-2 resize-none block"
+															placeholder="Leave a comment"
+															required
+															onChange={(e) => setAcomment(e.target.value)}
+															defaultValue={''}
+															value={acomment}
+														/>
+													</div>
+													<div className="p-2 w-full">
+														<button className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+															Post
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</section>
+							</div>
+							<div className="flex flex-col text-center w-full mb-12">
+								<h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-300">
+									Comments:
+								</h1>
+							</div>
+							<section className="text-gray-700 body-font overflow-hidden">
+								<div className="container px-5 py-24 mx-auto">
+									<div className="-my-8">
+										{comments?.length ? (
+											<div className="h-1 w-20 bg-indigo-500 rounded mb-8"></div>
+										) : (
+											''
+										)}
+										<div className="container mx-auto px-4">
+											{comments?.map((value, index) => (
+												<div className="bg-teal-100 text-center lg:py-4 md:py-4 lg:px-4 rounded my-4">
+													<div
+														className="p-2 bg-gray-700 items-center text-indigo-100 leading-none lg:rounded-full md:rounded-full flex lg:inline-flex  md:inline-flex"
+														role="alert"
+													>
+														<span className="flex rounded-full bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3">
+															{index + 1}
+														</span>
+														<span className="font-semibold mr-2 text-left flex-auto">
+															{value.content}
+														</span>
+													</div>
+												</div>
+											))}
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+					</div>
 				</div>
-			</div>
-		</Layout>
+			</Layout>
+		</>
 	);
 };

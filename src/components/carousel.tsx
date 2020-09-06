@@ -19,8 +19,8 @@ const Carousel = ({ pics }: { pics: TResponse[] }) => {
 				</div>
 				<div className="flex flex-wrap md:-m-2 -m-1">
 					<div className="flex flex-wrap w-1/2">
-						<Link href={'/game/' + pics[0]?.kebabTitle}>
-							<div className="md:p-2 p-1 w-full">
+						<Link as={'/game/' + pics[0]?.kebabTitle} href="/game/[id]">
+							<a className="md:p-2 p-1 w-full">
 								<picture>
 									<source
 										srcSet={pics[0]?.webp.replace('.jpeg', '.webp')}
@@ -33,10 +33,10 @@ const Carousel = ({ pics }: { pics: TResponse[] }) => {
 										src={pics[0]?.img}
 									/>
 								</picture>
-							</div>
+							</a>
 						</Link>
-						<Link href={'/game/' + pics[1]?.kebabTitle}>
-							<div className="md:p-2 p-1 w-full">
+						<Link as={'/game/' + pics[1]?.kebabTitle} href="/game/[id]">
+							<a className="md:p-2 p-1 w-full">
 								<picture>
 									<source
 										srcSet={pics[1]?.webp.replace('jpeg', 'webp')}
@@ -49,59 +49,65 @@ const Carousel = ({ pics }: { pics: TResponse[] }) => {
 										src={pics[1]?.img}
 									/>
 								</picture>
-							</div>
+							</a>
 						</Link>
 					</div>
 
 					<div className="flex flex-wrap w-1/2">
 						<div className="md:p-2 p-1 w-1/2">
-							<Link href={'/game/' + pics[2]?.kebabTitle}>
-								<picture>
-									<source
-										srcSet={pics[2]?.webp.replace('jpeg', 'webp')}
-										type="image/webp"
-									/>
-									<source srcSet={pics[2]?.img} type="image/jpeg" />
-									<img
-										alt={pics[2]?.title}
-										className="w-full object-cover h-full object-center block"
-										src={pics[2]?.img}
-									/>
-								</picture>
+							<Link as={'/game/' + pics[2]?.kebabTitle} href="/game/[id]">
+								<a>
+									<picture>
+										<source
+											srcSet={pics[2]?.webp.replace('jpeg', 'webp')}
+											type="image/webp"
+										/>
+										<source srcSet={pics[2]?.img} type="image/jpeg" />
+										<img
+											alt={pics[2]?.title}
+											className="w-full object-cover h-full object-center block"
+											src={pics[2]?.img}
+										/>
+									</picture>
+								</a>
 							</Link>
 						</div>
 						<div className="md:p-2 p-1 w-1/2">
-							<Link href={'/game/' + pics[3]?.kebabTitle}>
-								<picture>
-									<source
-										srcSet={pics[3]?.webp.replace('jpeg', 'webp')}
-										type="image/webp"
-									/>
-									<source srcSet={pics[3]?.img} type="image/jpeg" />
+							<Link as={'/game/' + pics[3]?.kebabTitle} href="/game/[id]">
+								<a>
+									<picture>
+										<source
+											srcSet={pics[3]?.webp.replace('jpeg', 'webp')}
+											type="image/webp"
+										/>
+										<source srcSet={pics[3]?.img} type="image/jpeg" />
 
-									<img
-										alt={pics[3]?.title}
-										className="w-full object-cover h-full object-center block"
-										src={pics[3]?.img}
-									/>
-								</picture>
+										<img
+											alt={pics[3]?.title}
+											className="w-full object-cover h-full object-center block"
+											src={pics[3]?.img}
+										/>
+									</picture>
+								</a>
 							</Link>
 						</div>
 						<div className="md:p-2 p-1 w-full">
-							<Link href={'/game/' + pics[4]?.kebabTitle}>
-								<picture>
-									<source
-										srcSet={pics[4]?.webp.replace('jpeg', 'webp')}
-										type="image/webp"
-									/>
-									<source srcSet={pics[4]?.img} type="image/jpeg" />
+							<Link as={'/game/' + pics[4]?.kebabTitle} href="/game/[id]">
+								<a>
+									<picture>
+										<source
+											srcSet={pics[4]?.webp.replace('jpeg', 'webp')}
+											type="image/webp"
+										/>
+										<source srcSet={pics[4]?.img} type="image/jpeg" />
 
-									<img
-										alt={pics[4]?.title}
-										className="w-full h-full object-cover object-center block"
-										src={pics[4]?.img}
-									/>
-								</picture>
+										<img
+											alt={pics[4]?.title}
+											className="w-full h-full object-cover object-center block"
+											src={pics[4]?.img}
+										/>
+									</picture>
+								</a>
 							</Link>
 						</div>
 					</div>

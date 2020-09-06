@@ -6,7 +6,7 @@ const Navbar: () => JSX.Element = () => {
 			<div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
 				<nav className="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
 					<Link href="/request">
-						<div className="mr-5 hover:text-gray-900">Request</div>
+						<a className="mr-5 hover:text-gray-900">Request</a>
 					</Link>
 					{/* <Link to='/request' className="mr-5 hover:text-gray-900">Report</Link> */}
 
@@ -19,14 +19,14 @@ const Navbar: () => JSX.Element = () => {
 					{/* <a className="mr-5 hover:text-gray-900"></a> */}
 				</nav>
 				<Link href="/">
-					<div className="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
+					<a className="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
 						<img
 							src={'https://game-linter.com/static/media/logoalso.1b70fb49.png'}
 							alt=""
 							className="w-16 h-16 text-white p-2 rounded-full"
 						/>
 						<span className="ml-3 text-xl">Game-Linter</span>
-					</div>
+					</a>
 				</Link>
 				<div className="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 text-white">
 					<a
