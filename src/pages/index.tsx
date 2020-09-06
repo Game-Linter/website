@@ -1,10 +1,7 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-// import styles from '../styles/Home.module.css';
-import Navbar from '../components/navbar';
-import Link from 'next/link';
 import Carousel from '../components/carousel';
-import Footer from '../components/footer';
+import Layout from '../components/layout';
 
 interface TResponse {
 	title: string;
@@ -14,7 +11,7 @@ interface TResponse {
 	webp: string;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const pics = await fetch('https://api.game-linter.com/games')
 		.then((res) => res.json())
 		.then((res) => res.pics as TResponse);
@@ -23,21 +20,21 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 		props: {
 			pics,
 		},
+		revalidate: 3600,
 	};
 };
 
 export default function Home({
 	pics,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
 		<div>
 			<Head>
-				<title>Create Next App</title>
+				<title>Game-Linter</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<Navbar />
 			<main>
-				<div className="card border-0 shadow my-5 look">
+				<Layout>
 					<div className="card-body p-5">
 						<div className="container mx-auto px-4">
 							<div className="bg-indigo-200 text-center lg:py-4 md:py-4 lg:px-4 lg:rounded md:rounded sm:rounded">
@@ -68,10 +65,9 @@ export default function Home({
 							</div>
 						</div>
 					</div>
-				</div>
-				<Carousel pics={pics} />
+					<Carousel pics={pics} />
+				</Layout>
 			</main>
-			<Footer />
 		</div>
 	);
 }
