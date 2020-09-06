@@ -69,7 +69,7 @@ export default function Home({
 		setBanner(theme === 'dark' ? false : true);
 	}, []);
 	return (
-		<div className={selected ? 'wtf-dark' : 'wtf-light'}>
+		<div>
 			<HeadElement token={token} index />
 			<main>
 				<Layout>

@@ -2,7 +2,7 @@ import NavBar from './navbar';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { Fragment } from 'react';
 import Footer from './footer';
-import Head from 'next/head';
+import useDarkMode from '../actions/handleDark';
 
 export const getStaticProps: GetStaticProps = async () => {
 	const token = await fetch('https://api.game-linter.com/games')
@@ -19,8 +19,9 @@ const Layout = ({
 	children,
 	token,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+	const [selected] = useDarkMode();
 	return (
-		<Fragment>
+		<div className={selected ? 'wtf-dark' : 'wtf-light'}>
 			<NavBar />
 			<div className="card border-0 shadow my-5 look">
 				<div className="card-body p-5 " id="tobeblurred">
@@ -28,7 +29,7 @@ const Layout = ({
 				</div>
 			</div>
 			<Footer />
-		</Fragment>
+		</div>
 	);
 };
 
