@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import useDark from '../actions/handleDark';
 
 const Navbar: () => JSX.Element = () => {
+	const [selected, toggler] = useDark();
+
 	return (
 		<header className="text-gray-700 body-font">
 			<div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -10,7 +13,10 @@ const Navbar: () => JSX.Element = () => {
 					</Link>
 					{/* <Link to='/request' className="mr-5 hover:text-gray-900">Report</Link> */}
 
-					<a className="bg-gray-700 border-0 py-1 px-3 focus:outline-none hover:bg-gray-600 rounded text-base">
+					<a
+						className="bg-gray-700 border-0 py-1 px-3 focus:outline-none hover:bg-gray-600 rounded text-base"
+						onClick={toggler}
+					>
 						<img
 							src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDMwMi40IDMwMi40Ij48cGF0aCBmaWxsPSIjRkZGIiBkPSJNMjA0LjggOTcuNkMxOTEuMiA4NCAxNzIgNzUuMiAxNTEuMiA3NS4ycy00MCA4LjQtNTMuNiAyMi40Yy0xMy42IDEzLjYtMjIuNCAzMi44LTIyLjQgNTMuNmE3Ni4zIDc2LjMgMCAwIDAgNzYgNzYgNzYuMyA3Ni4zIDAgMCAwIDc2LTc2YzAtMjAuOC04LjQtNDAtMjIuNC01My42em0tMTQuNCA5Mi44Yy0xMCAxMC0yNCAxNi0zOS4yIDE2cy0yOS4yLTYtMzkuMi0xNi0xNi0yNC0xNi0zOS4yIDYtMjkuMiAxNi0zOS4yIDI0LTE2IDM5LjItMTYgMjkuMiA2IDM5LjIgMTYgMTYgMjQgMTYgMzkuMi02IDI5LjItMTYgMzkuMnpNMjkyIDE0MC44aC0zMC44Yy01LjYgMC0xMC40IDQuOC0xMC40IDEwLjQgMCA1LjYgNC44IDEwLjQgMTAuNCAxMC40SDI5MmM1LjYgMCAxMC40LTQuOCAxMC40LTEwLjQgMC01LjYtNC44LTEwLjQtMTAuNC0xMC40ek0xNTEuMiAyNTAuOGMtNS42IDAtMTAuNCA0LjgtMTAuNCAxMC40VjI5MmMwIDUuNiA0LjggMTAuNCAxMC40IDEwLjQgNS42IDAgMTAuNC00LjggMTAuNC0xMC40di0zMC44YzAtNS42LTQuOC0xMC40LTEwLjQtMTAuNHpNMjU4IDI0My42bC0yMi0yMmMtMy42LTQtMTAuNC00LTE0LjQgMHMtNCAxMC40IDAgMTQuNGwyMiAyMmM0IDQgMTAuNCA0IDE0LjQgMHM0LTEwLjQgMC0xNC40ek0xNTEuMiAwYy01LjYgMC0xMC40IDQuOC0xMC40IDEwLjR2MzAuOGMwIDUuNiA0LjggMTAuNCAxMC40IDEwLjQgNS42IDAgMTAuNC00LjggMTAuNC0xMC40VjEwLjRjMC01LjYtNC44LTEwLjQtMTAuNC0xMC40ek0yNTguNCA0NC40Yy00LTQtMTAuNC00LTE0LjQgMGwtMjIgMjJjLTQgNC00IDEwLjQgMCAxNC40IDMuNiA0IDEwLjQgNCAxNC40IDBsMjItMjJjNC00IDQtMTAuNCAwLTE0LjR6TTQxLjIgMTQwLjhIMTAuNGMtNS42IDAtMTAuNCA0LjgtMTAuNCAxMC40czQuNCAxMC40IDEwLjQgMTAuNGgzMC44YzUuNiAwIDEwLjQtNC44IDEwLjQtMTAuNCAwLTUuNi00LjgtMTAuNC0xMC40LTEwLjR6TTgwLjQgMjIxLjZjLTMuNi00LTEwLjQtNC0xNC40IDBsLTIyIDIyYy00IDQtNCAxMC40IDAgMTQuNHMxMC40IDQgMTQuNCAwbDIyLTIyYzQtNCA0LTEwLjQgMC0xNC40ek04MC40IDY2LjRsLTIyLTIyYy00LTQtMTAuNC00LTE0LjQgMHMtNCAxMC40IDAgMTQuNGwyMiAyMmM0IDQgMTAuNCA0IDE0LjQgMHM0LTEwLjQgMC0xNC40eiIvPjwvc3ZnPg=="
 							alt="Toggler"

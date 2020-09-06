@@ -5,6 +5,7 @@ import Layout from '../components/layout';
 import Banner from '../components/darkmodeBanner';
 import Search from '../components/search';
 import useToken from '../actions/getToken';
+import useDarkMode from '../actions/handleDark';
 import {
 	useEffect,
 	useState,
@@ -43,6 +44,8 @@ export default function Home({
 	const [search, setSearch] = useState<string>('');
 	const [visible, setVisible] = useState<boolean>(false);
 	const [lmao, setToken] = useToken();
+	const [selected, toggler] = useDarkMode();
+	const [banner, setBanner] = useState(true);
 
 	const observer: MutableRefObject<any> = useRef();
 	const Loading = useCallback((node) => {
@@ -62,13 +65,15 @@ export default function Home({
 	useEffect(() => {
 		setGames(resp);
 		setToken(token);
+		const theme = window.localStorage.getItem('myTheme');
+		setBanner(theme === 'dark' ? false : true);
 	}, []);
 	return (
-		<div>
+		<div className={selected ? 'wtf-dark' : 'wtf-light'}>
 			<HeadElement token={token} index />
 			<main>
 				<Layout>
-					<Banner />
+					{banner ? <Banner /> : ''}
 					<Carousel pics={pics} />
 					<Highlights feat={feat} />
 					<TopDownloads popu={popu} />
