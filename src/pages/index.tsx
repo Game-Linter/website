@@ -5,13 +5,13 @@ import Layout from '../components/layout';
 import Banner from '../components/darkmodeBanner';
 import Search from '../components/search';
 import useToken from '../actions/getToken';
-import useDarkMode from '../actions/handleDark';
 import {
 	useEffect,
 	useState,
 	useCallback,
 	useRef,
 	MutableRefObject,
+	Fragment,
 } from 'react';
 import Highlights from '../components/highlights';
 import TopDownloads from '../components/topDownloads';
@@ -69,7 +69,7 @@ export default function Home({
 		setBanner(theme === 'dark' ? false : true);
 	}, []);
 	return (
-		<div>
+		<Fragment>
 			<HeadElement token={token} index />
 			<main>
 				<Layout>
@@ -92,6 +92,6 @@ export default function Home({
 					/>
 				</Layout>
 			</main>
-		</div>
+		</Fragment>
 	);
 }

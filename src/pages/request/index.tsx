@@ -21,16 +21,12 @@ function Request() {
 			.querySelector("meta[name='csrf-token']")
 			?.getAttribute('content');
 		await axios
-			.post(
-				'https://game-linter.com/api/mailer',
-				qs.stringify({ lmao: request }),
-				{
-					withCredentials: true,
-					headers: {
-						'X-CSRF-Token': token ? token : '',
-					},
-				}
-			)
+			.post('/api/mailer', qs.stringify({ lmao: request }), {
+				withCredentials: true,
+				headers: {
+					'X-CSRF-Token': token ? token : '',
+				},
+			})
 			.then(
 				() => {
 					setIsSending(false);
