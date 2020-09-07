@@ -17,9 +17,8 @@ const Search = ({ games, setNewGames, setSearch, search }: TGames) => {
 	const HandleChange: ChangeEventHandler = (
 		event: ChangeEvent<HTMLInputElement>
 	) => {
-		event.preventDefault();
 		setSearch(event.target.value);
-		var NewGames = games.filter((game) => {
+		const NewGames = games.filter((game) => {
 			return game.title.toLowerCase().includes(search.toLowerCase());
 		});
 		setNewGames(NewGames);

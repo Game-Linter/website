@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import LoadingOverlay from 'react-loading-overlay';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Layout from '../../components/layout';
+import Head from 'next/head';
 
 function Request() {
 	const [request, setRequest] = useState('');
@@ -47,6 +48,9 @@ function Request() {
 
 	return (
 		<Layout>
+			<Head>
+				<title>Request a Game Or Report a Game</title>
+			</Head>
 			<LoadingOverlay
 				active={isSending}
 				spinner={<PacmanLoader size={100} color={'#FFFFFF'} />}

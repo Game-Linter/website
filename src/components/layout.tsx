@@ -1,24 +1,8 @@
 import NavBar from './navbar';
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { Fragment } from 'react';
 import Footer from './footer';
 import useDarkMode from '../actions/handleDark';
 
-export const getStaticProps: GetStaticProps = async () => {
-	const token = await fetch('https://api.game-linter.com/games')
-		.then((res) => res.json())
-		.then((res) => res._csrf as string);
-	console.log(token);
-	return {
-		props: { token },
-		revalidate: 1,
-	};
-};
-
-const Layout = ({
-	children,
-	token,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Layout: React.FC = ({ children }) => {
 	const [selected] = useDarkMode();
 	return (
 		<div className={selected ? 'wtf-dark' : 'wtf-light'}>

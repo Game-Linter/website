@@ -44,7 +44,6 @@ export default function Home({
 	const [search, setSearch] = useState<string>('');
 	const [visible, setVisible] = useState<boolean>(false);
 	const [lmao, setToken] = useToken();
-	const [selected, toggler] = useDarkMode();
 	const [banner, setBanner] = useState(true);
 
 	const observer: MutableRefObject<any> = useRef();
