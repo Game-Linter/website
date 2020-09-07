@@ -6,9 +6,11 @@ const Display = ({
 	games,
 	loading,
 	visible,
+	newGames,
 }: {
 	search: string;
 	games: any[];
+	newGames: any[];
 	loading: (node: any) => void;
 	visible: boolean;
 }) => {
@@ -28,7 +30,7 @@ const Display = ({
 							? games.map((game, index) => (
 									<GameItem key={index} value={game} all />
 							  ))
-							: games.map((game, index) => (
+							: newGames.map((game, index) => (
 									<GameItem key={index} value={game} all={false} />
 							  ))}{' '}
 					</div>

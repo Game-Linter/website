@@ -18,10 +18,14 @@ const Search = ({ games, setNewGames, setSearch, search }: TGames) => {
 		event: ChangeEvent<HTMLInputElement>
 	) => {
 		setSearch(event.target.value);
-		const NewGames = games.filter((game) => {
-			return game.title.toLowerCase().includes(search.toLowerCase());
-		});
-		setNewGames(NewGames);
+		if (search) {
+			const NewGames = games.filter((game) => {
+				return game.title.toLowerCase().includes(search.toLowerCase());
+			});
+			setNewGames(NewGames);
+		} else {
+			setNewGames(games);
+		}
 	};
 	return (
 		<form

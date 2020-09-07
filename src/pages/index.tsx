@@ -41,6 +41,7 @@ export default function Home({
 	feat,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 	const [games, setGames] = useState([]);
+	const [newGames, setNewGames] = useState([]);
 	const [search, setSearch] = useState<string>('');
 	const [visible, setVisible] = useState<boolean>(false);
 	const [lmao, setToken] = useToken();
@@ -80,10 +81,11 @@ export default function Home({
 						search={search}
 						setSearch={setSearch}
 						games={games}
-						setNewGames={setGames}
+						setNewGames={setNewGames}
 					/>
 					<Display
 						games={games}
+						newGames={newGames}
 						search={search}
 						loading={Loading}
 						visible={visible}
