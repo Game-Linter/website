@@ -27,6 +27,21 @@ const HeadElement = ({
 }) => {
 	return (
 		<Head>
+			<script
+				async
+				src="https://www.googletagmanager.com/gtag/js?id=UA-148360710-2"
+			></script>
+			<script
+				dangerouslySetInnerHTML={{
+					__html: `
+					  window.dataLayer = window.dataLayer || [];
+					  function gtag(){dataLayer.push(arguments);}
+					  gtag('js', new Date());
+					
+					  gtag('config', 'UA-148360710-2');
+					`,
+				}}
+			/>
 			<title>Game-Linter</title>
 			<link rel="shortcut icon" href="logo.jpg" type="image/x-icon" />
 			<link rel="dns-prefetch" href="https://s3.game-linter.com/" />
@@ -40,6 +55,7 @@ const HeadElement = ({
 						  ' free Torrent from game-linter.com, Tested and Working 100%'
 				}
 			/>
+			<link rel="canonical" href="https://game-linter.com" />
 			<script
 				data-ad-client="ca-pub-1032102225919169"
 				async

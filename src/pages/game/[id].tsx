@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import qs from 'querystring';
 import HeadElement from '../../components/head';
 import useToken from '../../actions/getToken';
+import Clipboard from 'react-clipboard.js';
 
 type IParamURI = { params: { id: string } };
 interface IReturnValue {
@@ -23,6 +24,7 @@ interface IReturnValue {
 	WebpThumb: string;
 	info: string;
 	genre: string;
+	shortLink: string;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -46,6 +48,12 @@ export const getStaticProps: GetStaticProps<IReturnValue> = async ({
 	// Fetch data from external API
 	// console.log(ctx.params);
 	const res = await fetch(`https://api.game-linter.com/gamebyid/${params.id}`);
+	const shortLink = await Axios.post(
+		`https://short.game-linter.com/api/shorten`,
+		qs.stringify({
+			longUri: `https://game-linter.com/game/${params.id}`,
+		})
+	).then((res) => res.data.shortenedUrl as string);
 	const data = await res.json();
 	const {
 		backgroundimg,
@@ -80,6 +88,7 @@ export const getStaticProps: GetStaticProps<IReturnValue> = async ({
 			WebpThumb,
 			info: data.info,
 			genre,
+			shortLink,
 		},
 		revalidate: 3600,
 	};
@@ -100,6 +109,7 @@ export default ({
 	WebpThumb,
 	info,
 	genre,
+	shortLink,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const messageRef: RefObject<any> = React.createRef();
 
@@ -122,24 +132,24 @@ export default ({
 	}, []);
 
 	const share = async () => {
-		try {
-			const response = await Axios.post(
-				'https://short.game-linter.com/api/shorten',
-				qs.stringify({
-					longUri: window.location.href,
-				}),
-				{
-					withCredentials: true,
-				}
-			);
+		toast.success('Link copied!');
+		// try {
+		// 	// const response = await Axios.post(
+		// 	// 	'https://short.game-linter.com/api/shorten',
+		// 	// 	qs.stringify({
+		// 	// 		longUri: window.location.href,
+		// 	// 	}),
+		// 	// 	{
+		// 	// 		withCredentials: true,
+		// 	// 	}
+		// 	// );
 
-			navigator.clipboard.writeText(response.data.shortenedUrl).then(() => {
-				toast.success('Link copied!');
-			});
-		} catch (error) {
-			toast.error('OOps');
-			console.log(error);
-		}
+		// 	navigator.clipboard.writeText(shortLink).then(() => {
+		// 	});
+		// } catch (error) {
+		// 	toast.error('OOps');
+		// 	console.log(error);
+		// }
 	};
 
 	const HandleClick = async () => {
@@ -193,6 +203,7 @@ export default ({
 		WebpThumb,
 		info,
 		genre,
+		shortLink,
 	};
 	return (
 		<>
@@ -239,15 +250,23 @@ export default ({
 										>
 											Scroll to Bottom
 										</button>
-										<button
-											onClick={share}
-											className="ml-4 inline-flex  bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-oroange-600 rounded text-lg"
-											style={{
-												color: 'black ',
-											}}
+										<Clipboard
+											data-clipboard-text={shortLink}
+											onSuccess={share}
+											onError={() =>
+												toast.warn('Error copying text to Clipboard')
+											}
 										>
-											Share This page
-										</button>
+											<button
+												className="ml-4 inline-flex  bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-oroange-600 rounded text-lg"
+												style={{
+													color: 'black ',
+												}}
+												data-clipboard-text={shortLink}
+											>
+												Share This page
+											</button>
+										</Clipboard>
 									</div>
 								</div>
 							</div>
