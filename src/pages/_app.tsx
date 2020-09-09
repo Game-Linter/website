@@ -8,6 +8,7 @@ import { Integrations } from '@sentry/tracing';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { w3cwebsocket } from 'websocket';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 
 Sentry.init({
 	dsn:
@@ -59,18 +60,20 @@ Client.onmessage = function (e) {
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<>
-			<Component {...pageProps} />
-			<ToastContainer
-				position="top-center"
-				autoClose={3000}
-				hideProgressBar
-				newestOnTop
-				closeOnClick
-				rtl={false}
-				draggable={false}
-				pauseOnHover
-				transition={Slide}
-			/>
+			<GoogleReCaptchaProvider reCaptchaKey="6LcsfNoUAAAAAPLspEptovhkJMU4-cgZBh4bEPwr">
+				<Component {...pageProps} />
+				<ToastContainer
+					position="top-center"
+					autoClose={3000}
+					hideProgressBar
+					newestOnTop
+					closeOnClick
+					rtl={false}
+					draggable={false}
+					pauseOnHover
+					transition={Slide}
+				/>
+			</GoogleReCaptchaProvider>
 		</>
 	);
 }
