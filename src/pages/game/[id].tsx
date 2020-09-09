@@ -90,7 +90,7 @@ export const getStaticProps: GetStaticProps<IReturnValue> = async ({
 			genre,
 			shortLink,
 		},
-		revalidate: 3600,
+		revalidate: 1,
 	};
 };
 
