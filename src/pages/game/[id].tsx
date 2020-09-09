@@ -114,7 +114,6 @@ export default ({
 	const messageRef: RefObject<any> = React.createRef();
 
 	const [acomment, setAcomment] = useState<string>('');
-	const [token, setToken] = useToken();
 
 	useEffect(() => {
 		const portalRoot = document.getElementById('portal');
@@ -207,7 +206,7 @@ export default ({
 	};
 	return (
 		<>
-			<HeadElement index={false} data={data} token={token} />
+			<HeadElement index={false} data={data} />
 			<Layout>
 				<div id="blur" className="flex-wrap">
 					<div style={{ display: 'block' }}>
