@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { toast } from 'react-toastify';
 import qs from 'querystring';
 import HeadElement from '../../components/head';
-import useToken from '../../actions/getToken';
+import fetch from 'isomorphic-fetch';
 import Clipboard from 'react-clipboard.js';
 
 // export const config = { amp: 'hybrid' };
