@@ -8,8 +8,6 @@ import HeadElement from '../../components/head';
 import fetch from 'isomorphic-unfetch';
 import Clipboard from 'react-clipboard.js';
 
-// export const config = { amp: 'hybrid' };
-
 type IParamURI = { params: { id: string } };
 interface IReturnValue {
 	thumbnail: string;
