@@ -16,6 +16,7 @@ import {
 import Highlights from '../components/highlights';
 import TopDownloads from '../components/topDownloads';
 import Display from '../components/display';
+import fetch from 'isomorphic-unfetch';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const { pics, resp, popu, feat, _csrf } = await fetch(
