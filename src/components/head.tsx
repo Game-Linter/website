@@ -27,6 +27,7 @@ const HeadElement = ({
 }) => {
 	return (
 		<Head>
+			<meta name="propeller" content="58396a5602b22688ae5ca291344246ca"></meta>
 			<script
 				async
 				src="https://www.googletagmanager.com/gtag/js?id=UA-148360710-2"
