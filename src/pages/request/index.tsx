@@ -81,7 +81,7 @@ function Request() {
 								<div className="flex flex-wrap -m-2">
 									<div className="p-2 w-full text-black">
 										<textarea
-											className="w-full bg-gray-100 rounded text-black border-gray-400 focus:outline-none h-48 focus:border-indigo-500 text-base px-4 py-2 resize-none block"
+											className="w-full bg-gray-600 rounded text-black border-gray-400 focus:outline-none h-48 focus:border-indigo-500 text-base px-4 py-2 resize-none block"
 											placeholder="Message"
 											defaultValue={''}
 											required

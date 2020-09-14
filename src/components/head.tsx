@@ -44,7 +44,7 @@ const HeadElement = ({
 				}}
 			/>
 			<title>Game-Linter</title>
-			<link rel="shortcut icon" href="logo.jpg" type="image/x-icon" />
+			<link rel="shortcut icon" href="/logo.jpg" type="image/x-icon" />
 			<link rel="dns-prefetch" href="https://s3.game-linter.com/" />
 			<meta
 				name="description"

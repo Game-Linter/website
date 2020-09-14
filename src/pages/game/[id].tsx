@@ -414,7 +414,7 @@ export default ({
 												<div className="flex flex-wrap -m-2">
 													<div className="p-2 w-full text-black">
 														<textarea
-															className="w-full text-black bg-gray-100 rounded border border-gray-400 focus:outline-none h-48 focus:border-indigo-500 text-base px-4 py-2 resize-none block"
+															className="w-full text-black bg-gray-700 rounded border border-gray-400 focus:outline-none h-48 focus:border-indigo-500 text-base px-4 py-2 resize-none block"
 															placeholder="Leave a comment"
 															required
 															onChange={(e) => setAcomment(e.target.value)}
