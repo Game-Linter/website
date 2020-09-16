@@ -30,7 +30,7 @@ const HeadElement = ({
 			<meta name="propeller" content="58396a5602b22688ae5ca291344246ca"></meta>
 			<script
 				async
-				src="https://www.googletagmanager.com/gtag/js?id=UA-148360710-2"
+				src="https://www.googletagmanager.com/gtag/js?id=UA-148360710-1"
 			></script>
 			<script
 				dangerouslySetInnerHTML={{
@@ -39,7 +39,7 @@ const HeadElement = ({
 					  function gtag(){dataLayer.push(arguments);}
 					  gtag('js', new Date());
 					
-					  gtag('config', 'UA-148360710-2');
+					  gtag('config', 'UA-148360710-1');					
 					`,
 				}}
 			/>
