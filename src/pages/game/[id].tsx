@@ -7,6 +7,7 @@ import qs from 'querystring';
 import HeadElement from '../../components/head';
 import fetch from 'isomorphic-unfetch';
 import Clipboard from 'react-clipboard.js';
+import { useSnackbar } from 'notistack';
 
 type IParamURI = { params: { id: string } };
 interface IReturnValue {
@@ -123,6 +124,7 @@ export default ({
 	const messageRef: RefObject<any> = React.createRef();
 
 	const [acomment, setAcomment] = useState<string>('');
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	useEffect(() => {
 		const portalRoot = document.getElementById('portal');
@@ -140,7 +142,10 @@ export default ({
 	}, []);
 
 	const share = async () => {
-		toast.success('Link copied!');
+		enqueueSnackbar('Link copied!', {
+			variant: 'success',
+			preventDuplicate: true,
+		});
 		// try {
 		// 	// const response = await Axios.post(
 		// 	// 	'https://short.game-linter.com/api/shorten',
@@ -151,7 +156,6 @@ export default ({
 		// 	// 		withCredentials: true,
 		// 	// 	}
 		// 	// );
-
 		// 	navigator.clipboard.writeText(shortLink).then(() => {
 		// 	});
 		// } catch (error) {

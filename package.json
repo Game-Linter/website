@@ -9,6 +9,7 @@
 		"build:css": "postcss src/styles/tailwind.css -o src/styles/main.css"
 	},
 	"dependencies": {
+		"@material-ui/core": "^4.11.0",
 		"@sentry/react": "^5.22.3",
 		"@sentry/tracing": "^5.22.3",
 		"@types/axios": "^0.14.0",
@@ -23,6 +24,7 @@
 		"lodash": "^4.17.20",
 		"next": "9.5.3",
 		"nodemailer": "^6.4.11",
+		"notistack": "^1.0.0",
 		"react": "16.13.1",
 		"react-clipboard.js": "^2.0.16",
 		"react-dom": "16.13.1",

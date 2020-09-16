@@ -9,6 +9,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { w3cwebsocket } from 'websocket';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import { SnackbarProvider } from 'notistack';
 
 Sentry.init({
 	dsn:
@@ -59,7 +60,7 @@ Client.onmessage = function (e) {
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
-		<>
+		<SnackbarProvider autoHideDuration={3000} draggable={false}>
 			<GoogleReCaptchaProvider reCaptchaKey="6LcsfNoUAAAAAPLspEptovhkJMU4-cgZBh4bEPwr">
 				<Component {...pageProps} />
 				<ToastContainer
@@ -74,7 +75,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 					transition={Slide}
 				/>
 			</GoogleReCaptchaProvider>
-		</>
+		</SnackbarProvider>
 	);
 }
 
