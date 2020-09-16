@@ -43,7 +43,11 @@ const HeadElement = ({
 					`,
 				}}
 			/>
-			<title>Game-Linter</title>
+			<title>
+				{index
+					? 'Game-Linter'
+					: 'Game-Linter | Download' + data.title + ' Handepicked Torrent file'}
+			</title>
 			<link rel="shortcut icon" href="/logo.jpg" type="image/x-icon" />
 			<link rel="dns-prefetch" href="https://s3.game-linter.com/" />
 			<meta
@@ -80,9 +84,9 @@ const HeadElement = ({
 				content={
 					index
 						? 'Game-linter - Download handpicked torrent Games for free'
-						: 'Game-linter - Download ' +
+						: 'Game-linter | Download ' +
 						  data.title +
-						  ' handpicked torrent file'
+						  ' Handpicked Torrent file'
 				}
 			/>
 			<meta
