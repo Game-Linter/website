@@ -32,7 +32,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		'https://api.game-linter.com/games',
 		{
 			headers: {
-				referer: 'https://game-linter.com',
+				referer: 'https://game-linter.com/',
 			},
 		}
 	)
@@ -54,7 +54,7 @@ export const getStaticProps: GetStaticProps<IReturnValue> = async ({
 	// console.log(ctx.params);
 	const res = await fetch(`https://api.game-linter.com/gamebyid/${params.id}`, {
 		headers: {
-			referer: 'https://game-linter.com',
+			referer: 'https://game-linter.com/',
 		},
 	});
 	const shortLink = await Axios.post(

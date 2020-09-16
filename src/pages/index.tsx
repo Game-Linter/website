@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 		'https://api.game-linter.com/games',
 		{
 			headers: {
-				referer: 'https://game-linter.com',
+				referer: 'https://game-linter.com/',
 			},
 		}
 	).then((res) => res.json());
