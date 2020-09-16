@@ -46,7 +46,9 @@ const HeadElement = ({
 			<title>
 				{index
 					? 'Game-Linter'
-					: 'Game-Linter | Download' + data.title + ' Handepicked Torrent file'}
+					: 'Game-Linter | Download ' +
+					  data.title +
+					  ' Handepicked Torrent file'}
 			</title>
 			<link rel="shortcut icon" href="/logo.jpg" type="image/x-icon" />
 			<link rel="dns-prefetch" href="https://s3.game-linter.com/" />
