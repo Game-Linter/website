@@ -20,7 +20,12 @@ import fetch from 'isomorphic-unfetch';
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const { pics, resp, popu, feat, _csrf } = await fetch(
-		'https://api.game-linter.com/games'
+		'https://api.game-linter.com/games',
+		{
+			headers: {
+				referer: 'https://game-linter.com',
+			},
+		}
 	).then((res) => res.json());
 	return {
 		props: {

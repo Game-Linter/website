@@ -29,7 +29,12 @@ interface IReturnValue {
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const res: { kebabTitle: string }[] = await fetch(
-		'https://api.game-linter.com/games'
+		'https://api.game-linter.com/games',
+		{
+			headers: {
+				referer: 'https://game-linter.com',
+			},
+		}
 	)
 		.then((res) => res.json())
 		.then((data) => data.resp);
@@ -47,7 +52,11 @@ export const getStaticProps: GetStaticProps<IReturnValue> = async ({
 }) => {
 	// Fetch data from external API
 	// console.log(ctx.params);
-	const res = await fetch(`https://api.game-linter.com/gamebyid/${params.id}`);
+	const res = await fetch(`https://api.game-linter.com/gamebyid/${params.id}`, {
+		headers: {
+			referer: 'https://game-linter.com',
+		},
+	});
 	const shortLink = await Axios.post(
 		`https://short.game-linter.com/api/shorten`,
 		qs.stringify({
