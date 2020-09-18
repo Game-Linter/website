@@ -58,7 +58,7 @@ const Login: React.FC = () => {
 									name="email"
 									type="email"
 									required
-									className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+									className="appearance-none rounded-none bg-gray-600 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
 									placeholder="Email address"
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
@@ -70,7 +70,7 @@ const Login: React.FC = () => {
 									name="password"
 									type="password"
 									required
-									className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
+									className="appearance-none rounded-none bg-gray-600 relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5"
 									placeholder="Password"
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
