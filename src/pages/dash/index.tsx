@@ -7,7 +7,6 @@ import { InferGetServerSidePropsType } from 'next';
 import Form from '../../components/Form';
 import fetch from 'isomorphic-unfetch';
 import LoginForm from '../../components/loginForm';
-import { FormHelperText } from '@material-ui/core';
 
 export const getServerSideProps = async () => {
 	let name: string | null = null;
