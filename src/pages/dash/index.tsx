@@ -17,15 +17,16 @@ export const getServerSideProps = async () => {
 		},
 	});
 	const isLogged: boolean = await res.json().then((res) => res.isLogged);
+	console.log(isLogged);
 
-	// if (isLogged) {
-	// 	const res = await fetch('https://api.game-linter.com/user', {
-	// 		headers: {
-	// 			referer: 'https://game-linter.com/',
-	// 		},
-	// 	});
-	// 	name = await res.json().then((res) => res.data.name as string);
-	// }
+	if (isLogged) {
+		const res = await fetch('https://api.game-linter.com/user', {
+			headers: {
+				referer: 'https://game-linter.com/',
+			},
+		});
+		name = await res.json().then((res) => res.data.name as string);
+	}
 
 	return {
 		props: {
@@ -50,10 +51,7 @@ const Login = ({
 				qs.stringify({
 					username: email,
 					password,
-				}),
-				{
-					withCredentials: true,
-				}
+				})
 			)
 			.then(
 				(res) => {
