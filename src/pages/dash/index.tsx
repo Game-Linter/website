@@ -55,7 +55,8 @@ const Login = ({
 			.then(
 				(res) => {
 					console.log(res.data);
-					toast.success('Welcome Back!');
+					// toast.success('Welcome Back!');
+					window.location.reload();
 				},
 				(rej) => {
 					if (rej) {
