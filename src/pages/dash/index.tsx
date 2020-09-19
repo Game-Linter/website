@@ -14,7 +14,11 @@ export const getServerProps: GetServerSideProps = async (
 	ctx: GetServerSidePropsContext
 ) => {
 	const isLogged = await axios
-		.get('https://api.game-linter.com/dashboard')
+		.get('https://api.game-linter.com/dashboard', {
+			headers: {
+				referer: 'https://game-linter.com/',
+			},
+		})
 		.then((res) => res.data.isLogged as boolean);
 	return { props: { isLogged } };
 };
