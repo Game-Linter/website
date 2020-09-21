@@ -1,15 +1,23 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { NextApiRequest, NextApiResponse } from 'next';
-import { SendMailOptions } from 'nodemailer';
+import nodemailer, { SendMailOptions } from 'nodemailer';
 import ejs from 'ejs';
 import path from 'path';
 import lodash from 'lodash';
 import chalk from 'chalk';
-import ProtonMail from 'protonmail-api';
 
 export default (req: NextApiRequest, r: NextApiResponse) => {
 	const s = req.body.lmao;
 	try {
+		const transporter = nodemailer.createTransport({
+			service: 'Gmail',
+			port: 465,
+			secure: true,
+			auth: {
+				user: process.env.MAILER,
+				pass: process.env.PASSWORD,
+			},
+		});
 		ejs.renderFile(
 			path.resolve(__dirname, 'index.ejs'),
 			{
@@ -33,20 +41,14 @@ export default (req: NextApiRequest, r: NextApiResponse) => {
 					};
 				}
 				try {
-					// const mailSent = await transporter.sendMail(mailOptions);
+					const mailSent = await transporter.sendMail(mailOptions);
 					// console.log(mailSent);
-					const pm = await ProtonMail.connect({
-						username: 'game-linter@protonmail.com',
-						password: process.env.PASSWORD2,
-					});
-
-					await pm.sendEmail({
-						to: 'belkamelmohamed@gmail.com',
-						subject: 'Request OR Report',
-						body: s,
-					});
-
-					pm.close();
+					if (mailSent) {
+						console.log('mail sent + ' + chalk.green('Whew!'));
+						r.json({
+							success: true,
+						});
+					}
 				} catch (error) {
 					r.status(501).send(false);
 					console.log(error);
