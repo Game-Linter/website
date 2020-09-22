@@ -128,12 +128,15 @@ export default ({
 
 	useEffect(() => {
 		const portalRoot = document.getElementById('portal');
-		portalRoot.style.cssText +=
-			"background: url('" +
-			backgroundimg +
-			"') no-repeat fixed center center !important; background-size: cover !important;-o-background-size: cover !important;-moz-background-size: cover !important;-webkit-background-size: cover !important;";
-		const blurRoot = document.getElementById('tobeblurred');
-		blurRoot.style.cssText += 'backdrop-filter: blur(4px); border-radius: 40px';
+		if (localStorage.getItem('myTheme') === 'light') {
+			portalRoot.style.cssText +=
+				"background: url('" +
+				backgroundimg +
+				"') no-repeat fixed center center !important; background-size: cover !important;-o-background-size: cover !important;-moz-background-size: cover !important;-webkit-background-size: cover !important;";
+			const blurRoot = document.getElementById('tobeblurred');
+			blurRoot.style.cssText +=
+				'backdrop-filter: blur(4px); border-radius: 40px';
+		}
 		return () => {
 			portalRoot.style.cssText = '';
 			const blurRoot = document.getElementById('tobeblurred');
