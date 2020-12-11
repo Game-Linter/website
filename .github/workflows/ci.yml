@@ -23,6 +23,6 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: true
-          repository: darklight147/game-linter-nextjs/game-linter-nextjs
-          tags: latest
+          push: false
+          # repository: darklight147/game-linter-nextjs/game-linter-nextjs
+          # tags: latest
