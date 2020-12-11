@@ -2,7 +2,7 @@ name: remote ssh command
 on: [push]
 jobs:
   deploy:
-    name: Build
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - name: checkout
