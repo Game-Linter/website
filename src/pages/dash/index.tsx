@@ -10,24 +10,17 @@ import LoginForm from '../../components/loginForm';
 
 export const getServerSideProps = async () => {
 	let name: string | null = null;
-	const res = await fetch('https://api.game-linter.com/dashboard', {
-		headers: {
-			referer: 'https://game-linter.com/',
-		},
-	});
-	const isLogged: boolean = !(await res
-		.json()
-		.then((res) => res.data === null));
 
-	if (isLogged) {
-		const res = await fetch('https://api.game-linter.com/api/v1/currentuser', {
+	const res = await axios.get(
+		'https://api.game-linter.com/api/v1/currentuser',
+		{
 			headers: {
 				referer: 'https://game-linter.com/',
 			},
-		}).then((res) => res.json());
-		console.log(res);
-		name = await res.json().then((res) => res.data.name as string);
-	}
+		}
+	);
+	let isLogged = res.data !== null;
+	name = await res.data.name;
 
 	return {
 		props: {
