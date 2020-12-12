@@ -15,11 +15,12 @@ export const getServerSideProps = async () => {
 			referer: 'https://game-linter.com/',
 		},
 	});
-	const isLogged: boolean = await res.json().then((res) => res.isLogged);
-	console.log(isLogged);
+	const isLogged: boolean = !(await res
+		.json()
+		.then((res) => res.data === null));
 
 	if (isLogged) {
-		const res = await fetch('https://api.game-linter.com/user', {
+		const res = await fetch('https://api.game-linter.com/api/v1/currentuser', {
 			headers: {
 				referer: 'https://game-linter.com/',
 			},
@@ -46,17 +47,14 @@ const Login = ({
 	const HandleSubmit: (event: FormEvent<HTMLFormElement>) => void = () => {
 		event.preventDefault();
 		axios
-			.post(
-				'https://api.game-linter.com/api/v1/signin',
-				qs.stringify({
-					username: email,
-					password,
-				})
-			)
+			.post('https://api.game-linter.com/api/v1/signin', {
+				username: email,
+				password,
+			})
 			.then(
 				(res) => {
 					console.log(res.data);
-					// toast.success('Welcome Back!');
+					toast.success('Welcome Back!');
 					window.location.reload();
 				},
 				(rej) => {
