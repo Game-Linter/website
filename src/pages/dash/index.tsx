@@ -23,7 +23,8 @@ export const getServerSideProps = async () => {
 			headers: {
 				referer: 'https://game-linter.com/',
 			},
-		});
+		}).then((res) => res.json());
+		console.log(res);
 		name = await res.json().then((res) => res.data.name as string);
 	}
 
@@ -46,7 +47,7 @@ const Login = ({
 		event.preventDefault();
 		axios
 			.post(
-				'https://api.game-linter.com/login',
+				'https://api.game-linter.com/api/v1/signin',
 				qs.stringify({
 					username: email,
 					password,
