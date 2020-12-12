@@ -19,7 +19,9 @@ export const getServerSideProps = async () => {
 			},
 		}
 	);
+	console.log(res);
 	let isLogged = res.data !== null;
+	console.log(res.data);
 	name = await res.data.name;
 
 	return {
