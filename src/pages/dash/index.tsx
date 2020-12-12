@@ -12,16 +12,12 @@ export const getServerSideProps = async ({ req }) => {
 	let name: string | null = null;
 
 	try {
-		const res = await axios.get(
-			'https://api.game-linter.com/api/v1/currentuser',
-			{
+		const { currentUser, name } = await axios
+			.get('https://api.game-linter.com/api/v1/currentuser', {
 				headers: req.headers,
-			}
-		);
-		console.log(res);
-		console.log(res.data);
-		let isLogged = res.data.currentUser !== null;
-		name = await res.data.name;
+			})
+			.then((res) => res.data);
+		let isLogged = currentUser !== null;
 
 		return {
 			props: {
