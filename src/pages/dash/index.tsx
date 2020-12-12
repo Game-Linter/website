@@ -8,15 +8,13 @@ import Form from '../../components/Form';
 import fetch from 'isomorphic-unfetch';
 import LoginForm from '../../components/loginForm';
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({ req }) => {
 	let name: string | null = null;
 
 	const res = await axios.get(
 		'https://api.game-linter.com/api/v1/currentuser',
 		{
-			headers: {
-				referer: 'https://game-linter.com/',
-			},
+			headers: req.headers,
 		}
 	);
 	console.log(res);
@@ -32,10 +30,7 @@ export const getServerSideProps = async () => {
 	};
 };
 
-const Login = ({
-	isLogged,
-	name,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Login = ({ isLogged, name }: any) => {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 
