@@ -9,12 +9,16 @@ import fetch from 'isomorphic-unfetch';
 import LoginForm from '../../components/loginForm';
 
 export const getServerSideProps = async ({ req }) => {
+	console.log(req.headers);
 	try {
 		const { currentUser } = await axios
 			.get('https://api.game-linter.com/api/v1/currentuser', {
 				headers: req.headers
 			})
-			.then((res) => res.data);
+			.then((res) => {
+				console.log(res);
+				return res.data;
+			});
 		let isLogged = currentUser !== null;
 		const { name } = currentUser;
 
