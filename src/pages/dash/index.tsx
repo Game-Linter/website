@@ -10,7 +10,11 @@ import LoginForm from '../../components/loginForm';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const {currentUser} = await axios
-		.get('https://api.game-linter.com/api/v1/currentuser')
+		.get('https://api.game-linter.com/api/v1/currentuser', {
+			headers: {
+				cookie: context.req.headers.cookie
+			}
+		})
 		.then((res) => res.data)
 		.catch((err) => {
 			console.log(err);
