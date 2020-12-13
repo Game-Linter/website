@@ -20,14 +20,24 @@ export const getServerSideProps = async ({ req }) => {
 				return res.data;
 			});
 		let isLogged = currentUser !== null;
-		const { username } = currentUser;
+		
+		if (isLogged) {
+			const { username } = currentUser;
+			return {
+				props: {
+					isLogged,
+					name: username,
+				},
+			};
+		} else {
+			return {
+				props: {
+					isLogged,
+					name: '',
+				},
+			};
+		}
 
-		return {
-			props: {
-				isLogged,
-				name: username,
-			},
-		};
 	} catch (error) {
 		console.log(error);
 		return {
@@ -37,6 +47,7 @@ export const getServerSideProps = async ({ req }) => {
 };
 
 const Login = ({ isLogged, name }: any) => {
+	console.log(isLogged, name);
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 
