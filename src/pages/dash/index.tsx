@@ -43,12 +43,14 @@ const Login = ({ isLogged, name }: any) => {
 			.post('https://api.game-linter.com/api/v1/signin', {
 				username: email,
 				password,
+			}, {
+				withCredentials: true
 			})
 			.then(
 				(res) => {
 					console.log(res.data);
 					toast.success('Welcome Back!');
-					window.location.reload();
+					// window.location.reload();
 				},
 				(rej) => {
 					if (rej) {
