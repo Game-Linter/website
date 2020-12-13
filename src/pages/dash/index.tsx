@@ -9,18 +9,20 @@ import fetch from 'isomorphic-unfetch';
 import LoginForm from '../../components/loginForm';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	delete context.req.headers.accept;
-	console.log(context.req.headers);
-	const {currentUser} = await axios
+	// delete context.req.headers.accept;
+	// console.log(context.req.headers);
+	const { currentUser } = await axios
 		.get('https://api.game-linter.com/api/v1/currentuser', {
-			headers: context.req.headers
+			headers: {
+				cookie: context.req.headers.cookie,
+			},
 		})
 		.then((res) => res.data)
 		.catch((err) => {
 			console.log(err);
 		});
 
-		// console.log(currentUser);
+	// console.log(currentUser);
 
 	const isLogged = !(currentUser === null);
 
