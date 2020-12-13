@@ -60,7 +60,10 @@ function Login({
 				(res) => {
 					console.log(res.data);
 					toast.success('Welcome Back!');
-					// window.location.reload();
+					setTimeout(() => {
+						window.location.reload();
+						// window.location.href = '/dash';
+					}, 1200);
 				},
 				(rej) => {
 					if (rej) {

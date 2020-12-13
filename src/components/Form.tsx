@@ -220,10 +220,8 @@ const Form = ({ name }) => {
 					onClick={(event) => {
 						event.preventDefault();
 						axios
-							.get('https://api.game-linter.com/logout', {
-								withCredentials: true,
-							})
-							.then(() => window.location.reload(false));
+							.get('https://api.game-linter.com/api/v1/signout', {})
+							.then(() => window.location.reload());
 					}}
 					className="btn btn-warning"
 				>
