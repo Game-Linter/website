@@ -9,12 +9,11 @@ import fetch from 'isomorphic-unfetch';
 import LoginForm from '../../components/loginForm';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+	delete context.req.headers.accept;
 	console.log(context.req.headers);
 	const {currentUser} = await axios
 		.get('https://api.game-linter.com/api/v1/currentuser', {
-			headers: {
-				cookie: context.req.headers.cookie
-			}
+			headers: context.req.headers
 		})
 		.then((res) => res.data)
 		.catch((err) => {
