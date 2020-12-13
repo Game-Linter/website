@@ -20,12 +20,12 @@ export const getServerSideProps = async ({ req }) => {
 				return res.data;
 			});
 		let isLogged = currentUser !== null;
-		const { name } = currentUser;
+		const { username } = currentUser;
 
 		return {
 			props: {
 				isLogged,
-				name,
+				name: username,
 			},
 		};
 	} catch (error) {
