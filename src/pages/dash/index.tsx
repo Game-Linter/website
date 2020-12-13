@@ -9,32 +9,32 @@ import fetch from 'isomorphic-unfetch';
 import LoginForm from '../../components/loginForm';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	const data = await axios
+	const {currentUser} = await axios
 		.get('https://api.game-linter.com/api/v1/currentuser')
 		.then((res) => res.data)
 		.catch((err) => {
 			console.log(err);
 		});
 
-		console.log(data);
+		console.log(currentUser);
 
-	// const isLogged = !(currentUser === null);
+	const isLogged = !(currentUser === null);
 
-	// if (isLogged) {
-	// 	return {
-	// 		props: {
-	// 			isLogged,
-	// 			name: currentUser.username as string,
-	// 		}, // will be passed to the page component as props
-	// 	};
-	// } else {
+	if (isLogged) {
 		return {
 			props: {
-				isLogged : true,
+				isLogged,
+				name: currentUser.username as string,
+			}, // will be passed to the page component as props
+		};
+	} else {
+		return {
+			props: {
+				isLogged,
 				name: '' as string,
 			}, // will be passed to the page component as props
 		};
-	// }
+	}
 };
 
 function Login({
