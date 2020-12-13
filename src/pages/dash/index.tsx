@@ -17,7 +17,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			headers,
 		}
 	)
-		.then((res) => res.data)
+		.then((res) => {
+			console.log(res.data);
+			return res.data;
+		})
 		.catch((err) => {
 			console.log(err);
 		});
