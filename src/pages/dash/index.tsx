@@ -12,7 +12,6 @@ export const getServerSideProps = async ({ req }) => {
 	try {
 		const { currentUser } = await axios
 			.get('https://api.game-linter.com/api/v1/currentuser', {
-				headers: req.headers,
 				withCredentials: true,
 			})
 			.then((res) => res.data);
