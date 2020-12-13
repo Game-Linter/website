@@ -11,6 +11,8 @@ import { w3cwebsocket } from 'websocket';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { SnackbarProvider } from 'notistack';
 
+axios.defaults.withCredentials = true;
+
 Sentry.init({
 	dsn:
 		'https://ae57e74d182f46b8928e1ad3a1f4226c@o337865.ingest.sentry.io/5421685',
