@@ -15,6 +15,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		'https://api.game-linter.com/api/v1/currentuser',
 		{
 			headers,
+			credentials: 'include'
 		}
 	)
 		.then((res) => res.json())
