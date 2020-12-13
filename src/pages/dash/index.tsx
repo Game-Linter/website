@@ -3,50 +3,48 @@ import axios from 'axios';
 import qs from 'querystring';
 import { toast } from 'react-toastify';
 import Layout from '../../components/layout';
-import { InferGetServerSidePropsType } from 'next';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Form from '../../components/Form';
 import fetch from 'isomorphic-unfetch';
 import LoginForm from '../../components/loginForm';
 
-export const getServerSideProps = async ({ req }) => {
-	console.log(req.headers);
-	try {
-		const { currentUser } = await axios
-			.get('https://api.game-linter.com/api/v1/currentuser', {
-				headers: req.headers
-			})
-			.then((res) => {
-				console.log(res.data);
-				return res.data;
-			});
-		let isLogged = currentUser !== null;
-		
-		if (isLogged) {
-			const { username } = currentUser;
-			return {
-				props: {
-					isLogged,
-					name: username,
-				},
-			};
-		} else {
-			return {
-				props: {
-					isLogged,
-					name: '',
-				},
-			};
-		}
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const { headers } = context.req as any;
 
-	} catch (error) {
-		console.log(error);
+	const { currentUser } = await fetch(
+		'https://api.game-linter.com/api/v1/currentuser',
+		{
+			headers,
+		}
+	)
+		.then((res) => res.json())
+		.catch((err) => {
+			console.log(err);
+		});
+
+	const isLogged = !(currentUser === null);
+
+	if (isLogged) {
 		return {
-			props: {},
+			props: {
+				isLogged,
+				name: currentUser.username as string,
+			}, // will be passed to the page component as props
+		};
+	} else {
+		return {
+			props: {
+				isLogged,
+				name: '' as string,
+			}, // will be passed to the page component as props
 		};
 	}
 };
 
-const Login = ({ isLogged, name }: any) => {
+function Login({
+	isLogged,
+	name,
+}): InferGetServerSidePropsType<typeof getServerSideProps> {
 	console.log(isLogged, name);
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
@@ -57,8 +55,6 @@ const Login = ({ isLogged, name }: any) => {
 			.post('https://api.game-linter.com/api/v1/signin', {
 				username: email,
 				password,
-			}, {
-				withCredentials: true
 			})
 			.then(
 				(res) => {
@@ -90,6 +86,6 @@ const Login = ({ isLogged, name }: any) => {
 			)}
 		</Layout>
 	);
-};
+}
 
 export default Login;
