@@ -11,37 +11,34 @@ import LoginForm from '../../components/loginForm';
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const { headers } = context.req as any;
 
-	const { currentUser } = await axios.get(
-		'https://api.game-linter.com/api/v1/currentuser',
-		{
+	const data = await axios
+		.get('https://api.game-linter.com/api/v1/currentuser', {
 			headers,
-		}
-	)
-		.then((res) => {
-			console.log(res.data);
-			return res.data;
 		})
+		.then((res) => res.data)
 		.catch((err) => {
 			console.log(err);
 		});
 
-	const isLogged = !(currentUser === null);
+		console.log(data);
 
-	if (isLogged) {
+	// const isLogged = !(currentUser === null);
+
+	// if (isLogged) {
+	// 	return {
+	// 		props: {
+	// 			isLogged,
+	// 			name: currentUser.username as string,
+	// 		}, // will be passed to the page component as props
+	// 	};
+	// } else {
 		return {
 			props: {
-				isLogged,
-				name: currentUser.username as string,
-			}, // will be passed to the page component as props
-		};
-	} else {
-		return {
-			props: {
-				isLogged,
+				isLogged : true,
 				name: '' as string,
 			}, // will be passed to the page component as props
 		};
-	}
+	// }
 };
 
 function Login({
