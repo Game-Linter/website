@@ -21,7 +21,7 @@ const Resetpassword: () => JSX.Element = () => {
 				});
 			})
 			.catch((err) => {
-				showErrors(err);
+				showErrors(err, enqueueSnackbar);
 			});
 	};
 

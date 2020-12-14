@@ -72,7 +72,7 @@ function Login({
 				}, 1200);
 			})
 			.catch((err) => {
-				showErrors(err);
+				showErrors(err, enqueueSnackbar);
 			});
 	};
 
