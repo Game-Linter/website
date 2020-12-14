@@ -70,12 +70,12 @@ function Login({
 			})
 			.catch((err) => {
 				console.log(err.response);
-				// err.response.errors.map((message: string) => {
-				// 	// toast.warn(message);
-				// 	enqueueSnackbar(message, {
-				// 		variant: 'warning',
-				// 	});
-				// });
+				err.response.errors.map((message: string) => {
+					// toast.warn(message);
+					enqueueSnackbar(message, {
+						variant: 'warning',
+					});
+				});
 			});
 	};
 
