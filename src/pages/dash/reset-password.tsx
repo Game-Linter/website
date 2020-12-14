@@ -21,7 +21,12 @@ const Resetpassword: () => JSX.Element = () => {
 				});
 			})
 			.catch((err) => {
-				showErrors(err, enqueueSnackbar);
+				// showErrors(err, enqueueSnackbar);
+				err.response.data.errors.map((error: { message: string }) => {
+					enqueueSnackbar(error.message, {
+						variant: 'warning',
+					});
+				});
 			});
 	};
 
