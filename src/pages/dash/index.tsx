@@ -8,6 +8,7 @@ import Form from '../../components/Form';
 import fetch from 'isomorphic-unfetch';
 import LoginForm from '../../components/loginForm';
 import { useSnackbar } from 'notistack';
+import { showErrors } from '../../actions/show-errors.action';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	// delete context.req.headers.accept;
@@ -62,20 +63,15 @@ function Login({
 			})
 			.then((res) => {
 				console.log(res.data);
-				toast.success('Welcome Back!');
+				enqueueSnackbar('Welcome Back!', {
+					variant: 'success',
+				});
 				setTimeout(() => {
 					window.location.reload();
 					// window.location.href = '/dash';
 				}, 1200);
 			})
-			.catch((err) => {
-				// console.log(err.response.data.errors);
-				err.response.data.errors.map((error: { message: string }) => {
-					enqueueSnackbar(error.message, {
-						variant: 'warning',
-					});
-				});
-			});
+			.catch(showErrors);
 	};
 
 	return (
