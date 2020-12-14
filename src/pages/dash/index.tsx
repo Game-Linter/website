@@ -69,12 +69,13 @@ function Login({
 				}, 1200);
 			})
 			.catch((err) => {
-				err.response.errors.map((message: string) => {
-					// toast.warn(message);
-					enqueueSnackbar(message, {
-						variant: 'warning',
-					});
-				});
+				console.log(err.response);
+				// err.response.errors.map((message: string) => {
+				// 	// toast.warn(message);
+				// 	enqueueSnackbar(message, {
+				// 		variant: 'warning',
+				// 	});
+				// });
 			});
 	};
 
