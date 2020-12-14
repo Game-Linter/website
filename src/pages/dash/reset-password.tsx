@@ -6,11 +6,12 @@ import { useSnackbar } from 'notistack';
 
 const Resetpassword: () => JSX.Element = () => {
 	const [email, setEmail] = useState<string>('');
+	const [disabled, setDisabled] = useState<boolean>(false);
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const HandleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
+		setDisabled(true);
 		await axios
 			.post('https://api.game-linter.com/api/v1/reset-email', {
 				email,
@@ -19,6 +20,7 @@ const Resetpassword: () => JSX.Element = () => {
 				enqueueSnackbar('Check you inbox', {
 					variant: 'success',
 				});
+				setDisabled(false);
 			})
 			.catch((err) => {
 				// showErrors(err, enqueueSnackbar);
@@ -27,6 +29,7 @@ const Resetpassword: () => JSX.Element = () => {
 						variant: 'warning',
 					});
 				});
+				setDisabled(false);
 			});
 	};
 
@@ -63,6 +66,7 @@ const Resetpassword: () => JSX.Element = () => {
 						</div>
 						<div className="mt-6">
 							<button
+								disabled={disabled}
 								type="submit"
 								className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
 							>
