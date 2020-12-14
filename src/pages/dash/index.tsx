@@ -69,6 +69,8 @@ function Login({
 				}, 1200);
 			})
 			.catch((err) => {
+				console.log(JSON.stringify(err));
+				console.log(err);
 				console.log(err.response);
 				err.response.errors.map((message: string) => {
 					// toast.warn(message);
