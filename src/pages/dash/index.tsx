@@ -69,8 +69,9 @@ function Login({
 				}, 1200);
 			})
 			.catch((err) => {
-				console.log(err.response.data.errors);
+				// console.log(err.response.data.errors);
 				err.response.data.errors.map((message: string) => {
+					console.log(message);
 					enqueueSnackbar(message, {
 						variant: 'warning',
 					});
