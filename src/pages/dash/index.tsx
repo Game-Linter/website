@@ -7,6 +7,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Form from '../../components/Form';
 import fetch from 'isomorphic-unfetch';
 import LoginForm from '../../components/loginForm';
+import { useSnackbar } from 'notistack';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	// delete context.req.headers.accept;
@@ -50,6 +51,7 @@ function Login({
 	// console.log(isLogged, name);
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const HandleSubmit: (event: FormEvent<HTMLFormElement>) => void = () => {
 		event.preventDefault();
@@ -58,22 +60,22 @@ function Login({
 				username: email,
 				password,
 			})
-			.then(
-				(res) => {
-					console.log(res.data);
-					toast.success('Welcome Back!');
-					setTimeout(() => {
-						window.location.reload();
-						// window.location.href = '/dash';
-					}, 1200);
-				},
-				(rej) => {
-					if (rej) {
-						console.log(rej);
-						toast.warn('Wrong Email/Password');
-					}
-				}
-			);
+			.then((res) => {
+				console.log(res.data);
+				toast.success('Welcome Back!');
+				setTimeout(() => {
+					window.location.reload();
+					// window.location.href = '/dash';
+				}, 1200);
+			})
+			.catch((err) => {
+				err.response.errors.map((message: string) => {
+					// toast.warn(message);
+					enqueueSnackbar(message, {
+						variant: 'warning',
+					});
+				});
+			});
 	};
 
 	return (
