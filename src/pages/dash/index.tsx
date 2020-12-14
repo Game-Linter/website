@@ -71,7 +71,9 @@ function Login({
 					// window.location.href = '/dash';
 				}, 1200);
 			})
-			.catch(showErrors);
+			.catch((err) => {
+				showErrors(err);
+			});
 	};
 
 	return (

@@ -20,7 +20,9 @@ const Resetpassword: () => JSX.Element = () => {
 					variant: 'success',
 				});
 			})
-			.catch(showErrors);
+			.catch((err) => {
+				showErrors(err);
+			});
 	};
 
 	return (
