@@ -81,9 +81,9 @@ const ChangePassword: (props: IProps) => JSX.Element = ({
 									<div className="mt-5 text-xl">
 										<div className="mt-1 relative rounded-md shadow-sm">
 											<input
-												type="email"
-												name="email"
-												id="email"
+												type="password"
+												name="password"
+												id="password"
 												className="focus:border-indigo-500 block w-full pl-7 pr-12 border-gray-300 rounded-md"
 												value={password}
 												onChange={(e) => setPassword(e.target.value)}
@@ -92,9 +92,9 @@ const ChangePassword: (props: IProps) => JSX.Element = ({
 											<div className="absolute inset-y-0 right-0 flex items-center mt-5"></div>
 
 											<input
-												type="email"
-												name="email"
-												id="email"
+												type="password"
+												name="password"
+												id="password"
 												className="focus:border-indigo-500 block w-full pl-7 pr-12 border-gray-300 rounded-md mt-8"
 												value={passwordConfirm}
 												onChange={(e) => setPasswordConfirm(e.target.value)}

@@ -52,6 +52,7 @@ const Resetpassword: () => JSX.Element = () => {
 										className="focus:border-indigo-500 block w-full pl-7 pr-12 border-gray-300 rounded-md"
 										value={email}
 										onChange={(e) => setEmail(e.target.value)}
+										placeholder="Email"
 									/>
 									<div className="absolute inset-y-0 right-0 flex items-center"></div>
 								</div>
