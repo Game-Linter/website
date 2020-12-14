@@ -37,7 +37,7 @@ const Resetpassword: () => JSX.Element = () => {
 		<Layout>
 			<div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
 				<div className="max-w-md w-full">
-					<form className="mt-8" onSubmit={HandleSubmit}>
+					<form className="mt-8" onSubmit={!disabled && HandleSubmit}>
 						<input type="hidden" name="remember" defaultValue="true" />
 						<div className="rounded-md shadow-sm">
 							<div className="font-bold text-3xl">What's your email</div>
