@@ -49,7 +49,9 @@ const ChangePassword: (props: IProps) => JSX.Element = ({
 				validation,
 			})
 			.then((res) => {
-				enqueueSnackbar('Success, password changes succefully');
+				enqueueSnackbar('Success, password changed successfully', {
+					variant: 'info',
+				});
 				setTimeout(() => {
 					router.push('/dash');
 				}, 1500);
