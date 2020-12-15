@@ -55,15 +55,11 @@ const ChangePassword: (props: IProps) => JSX.Element = ({
 				}, 1500);
 			})
 			.catch((err) => {
-				setErrorMessages(
-					err.response.data.errors.map((error) => {
-						return (
-							<div className="bg-red-200 relative text-red-500 py-3 px-3 rounded-lg">
-								{error.message}
-							</div>
-						);
-					})
-				);
+				err.response.data.errors.map((error) => {
+					enqueueSnackbar(error.message, {
+						variant: 'warning',
+					});
+				});
 			});
 	};
 	return (
@@ -128,7 +124,13 @@ const ChangePassword: (props: IProps) => JSX.Element = ({
 				<div>
 					<div>
 						<div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-							{errorMessages}
+							{errors.map((error) => {
+								return (
+									<div className="bg-red-200 relative text-red-500 py-3 px-3 rounded-lg">
+										{error.message}
+									</div>
+								);
+							})}
 						</div>
 					</div>
 				</div>
