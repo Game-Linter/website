@@ -21,25 +21,21 @@ function Request() {
 			.querySelector("meta[name='csrf-token']")
 			?.getAttribute('content');
 		await axios
-			.post('/api/mailer', qs.stringify({ lmao: request }), {
-				withCredentials: true,
-				headers: {
-					'X-CSRF-Token': token ? token : '',
-				},
+			.post('https://api.game-linter.com/api/v1/mailer', {
+				lmao: request,
 			})
-			.then(
-				() => {
-					setIsSending(false);
-					toast.info('Thank you!');
-					setTimeout(() => {
-						window.location.href = '/';
-					}, 1500);
-				},
-				() => {
-					setIsSending(false);
-					toast.warn('Sorry, try again later');
-				}
-			);
+			.then(() => {
+				setIsSending(false);
+				toast.info('Thank you!');
+				setTimeout(() => {
+					window.location.href = '/';
+				}, 1500);
+			})
+			.catch((err) => {
+				err.response.data.errors.map((error) => {
+					toast.warn(error.message);
+				});
+			});
 	};
 
 	return (
