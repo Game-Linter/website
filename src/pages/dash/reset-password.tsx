@@ -17,7 +17,7 @@ const Resetpassword: () => JSX.Element = () => {
 				email,
 			})
 			.then((res) => {
-				enqueueSnackbar('Check you inbox', {
+				enqueueSnackbar('Check your inbox', {
 					variant: 'success',
 				});
 				setDisabled(false);
