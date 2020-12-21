@@ -11,6 +11,12 @@ const Navbar: () => JSX.Element = () => {
 					<Link href="/request">
 						<a className="mr-5 hover:text-gray-900">Request</a>
 					</Link>
+					<Link href="/stack">
+						<a className="mr-5 hover:text-gray-900 font-semibold">Tech-stack</a>
+					</Link>
+					<Link href="/donation">
+						<a className="mr-5 hover:text-gray-900 font-bold">Donation</a>
+					</Link>
 					{/* <Link to='/request' className="mr-5 hover:text-gray-900">Report</Link> */}
 
 					<a
