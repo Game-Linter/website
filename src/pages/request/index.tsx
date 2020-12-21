@@ -32,6 +32,7 @@ function Request() {
 				}, 1500);
 			})
 			.catch((err) => {
+				setIsSending(false);
 				err.response.data.errors.map((error) => {
 					toast.warn(error.message);
 				});

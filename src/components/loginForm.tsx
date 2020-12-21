@@ -6,6 +6,8 @@ const LoginForm = ({
 	email,
 	password,
 	setPassword,
+	remember,
+	setRemember,
 }) => {
 	return (
 		<div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -50,6 +52,17 @@ const LoginForm = ({
 					</div>
 					<div className="mt-6 flex items-center justify-between">
 						<div className="text-sm leading-5">
+							<div className="flex justify-items-auto">
+								<input
+									type="checkbox"
+									className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 mt-2 flex"
+									onChange={(e) => setRemember(!remember)}
+									checked={remember}
+								/>
+								<label className="m-1" onClick={(e) => setRemember(!remember)}>
+									Remember me
+								</label>
+							</div>
 							<Link href="/dash/reset-password">
 								<a className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
 									Forgot your password?

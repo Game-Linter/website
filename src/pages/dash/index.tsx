@@ -52,6 +52,7 @@ function Login({
 	// console.log(isLogged, name);
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
+	const [remember, setRemember] = useState<boolean>(false);
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const HandleSubmit: (event: FormEvent<HTMLFormElement>) => void = () => {
@@ -60,6 +61,7 @@ function Login({
 			.post('https://api.game-linter.com/api/v1/signin', {
 				username: email,
 				password,
+				remember,
 			})
 			.then((res) => {
 				console.log(res.data);
@@ -90,6 +92,8 @@ function Login({
 					HandleSubmit={HandleSubmit}
 					email={email}
 					password={password}
+					remember={remember}
+					setRemember={setRemember}
 					setEmail={setEmail}
 					setPassword={setPassword}
 				/>

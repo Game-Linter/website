@@ -12,11 +12,13 @@ const Resetpassword: () => JSX.Element = () => {
 	const HandleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setDisabled(true);
+		const loadingID = enqueueSnackbar('Loading...');
 		await axios
 			.post('https://api.game-linter.com/api/v1/reset-email', {
 				email,
 			})
 			.then((res) => {
+				closeSnackbar(loadingID);
 				enqueueSnackbar('Check your inbox', {
 					variant: 'success',
 				});
@@ -24,6 +26,7 @@ const Resetpassword: () => JSX.Element = () => {
 			})
 			.catch((err) => {
 				// showErrors(err, enqueueSnackbar);
+				closeSnackbar(loadingID);
 				err.response.data.errors.map((error: { message: string }) => {
 					enqueueSnackbar(error.message, {
 						variant: 'warning',
