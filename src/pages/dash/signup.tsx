@@ -55,7 +55,9 @@ export default function Signup({ isLogged }: any) {
 				.then((res) => {
 					closeSnackbar(barID);
 					setSending(false);
-					enqueueSnackbar('Account created check your email');
+					enqueueSnackbar('Account created check your email', {
+						variant: 'success',
+					});
 					return res.data;
 				});
 
