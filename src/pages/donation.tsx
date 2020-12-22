@@ -33,7 +33,7 @@ export default function Stack() {
 		<Fragment>
 			<Layout>
 				<div className="border-2 border-dotted border-gray-600">
-					{crypto.map(({ address, label }) => {
+					{crypto.map(({ address, label }, index, crypto) => {
 						return (
 							<Fragment>
 								<h3 className="flex justify-center font-semibold text-xl">
@@ -45,8 +45,14 @@ export default function Stack() {
 								<h4 className="flex justify-center mt-5 font-mono">
 									{address}
 								</h4>
-								<hr />
-								<hr />
+								{index === crypto.length - 1 ? (
+									''
+								) : (
+									<div>
+										<hr />
+										<hr />
+									</div>
+								)}
 							</Fragment>
 						);
 					})}
