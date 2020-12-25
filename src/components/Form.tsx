@@ -20,7 +20,7 @@ const Form = ({ name }) => {
 		event.preventDefault();
 		axios
 			.post(
-				'https://api.game-linter.com/add-game/secret',
+				'https://api.game-linter.com/add-game',
 				qs.stringify({
 					title,
 					size,
@@ -46,25 +46,26 @@ const Form = ({ name }) => {
 					}, 1200);
 				},
 				(e) => {
-					if (e.response.status === 403) {
-						enqueueSnackbar('Token missing', {
+					e.response.data.errors.map((error) => {
+						enqueueSnackbar(error.message, {
 							variant: 'warning',
 						});
-					} else {
-						enqueueSnackbar('Try again', {
-							variant: 'warning',
-						});
-					}
+					});
 				}
 			);
 	};
 
 	return (
 		<div>
-			<h1 className="font-weight-light ">{'Welcome ' + name + ' 💖.'}</h1>
-			<form onSubmit={HandleSubmit}>
-				<div className="form-row">
-					<div className="form-group col-md-6">
+			<h1 className="font-sans text-lg flex justify-center ">
+				{'Welcome ' + name + ' 💖.'}
+			</h1>
+			<form
+				onSubmit={HandleSubmit}
+				className="grid grid-cols-2 border border-1 border-black"
+			>
+				<div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+					<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
 						{' '}
 						<label>Title</label>
 						<input
@@ -78,7 +79,7 @@ const Form = ({ name }) => {
 							required
 						/>{' '}
 					</div>
-					<div className="form-group col-md-6">
+					<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
 						{' '}
 						<label>Size in GB</label>
 						<input
@@ -93,7 +94,7 @@ const Form = ({ name }) => {
 						/>{' '}
 					</div>
 				</div>
-				<div className="form-group">
+				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
 					{' '}
 					<label>Genre</label>
 					<input
@@ -107,7 +108,7 @@ const Form = ({ name }) => {
 						required
 					/>{' '}
 				</div>
-				<div className="form-group">
+				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
 					{' '}
 					<label>Number of files</label>
 					<input
@@ -121,7 +122,7 @@ const Form = ({ name }) => {
 						required
 					/>{' '}
 				</div>
-				<div className="form-group">
+				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
 					{' '}
 					<label>
 						<b>Magnet</b> link
@@ -138,7 +139,7 @@ const Form = ({ name }) => {
 						autoComplete="off"
 					/>{' '}
 				</div>
-				<div className="form-group">
+				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
 					{' '}
 					<label>Review</label>
 					<input
@@ -154,7 +155,7 @@ const Form = ({ name }) => {
 						placeholder="in percent..."
 					/>{' '}
 				</div>
-				<div className="form-group">
+				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
 					{' '}
 					<label>Thumbnail link</label>
 					<input
@@ -169,7 +170,7 @@ const Form = ({ name }) => {
 						autoComplete="off"
 					/>{' '}
 				</div>
-				<div className="form-group">
+				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
 					{' '}
 					<label>background link</label>
 					<input
@@ -184,7 +185,7 @@ const Form = ({ name }) => {
 						autoComplete="off"
 					/>{' '}
 				</div>
-				<div className="form-group">
+				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
 					{' '}
 					<label>Money Link</label>
 					<input
@@ -198,7 +199,7 @@ const Form = ({ name }) => {
 						autoComplete="off"
 					/>{' '}
 				</div>
-				<div className="form-group">
+				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
 					{' '}
 					<label>Trailer Link</label>
 					<input
@@ -213,7 +214,10 @@ const Form = ({ name }) => {
 						autoComplete="off"
 					/>{' '}
 				</div>
-				<button type="submit" className="btn btn-primary">
+				<button
+					type="submit"
+					className="mt-5 border-4 bg-blue-300 border-gray-300"
+				>
 					Done!
 				</button>{' '}
 				<button
@@ -223,7 +227,7 @@ const Form = ({ name }) => {
 							.get('https://api.game-linter.com/api/v1/signout', {})
 							.then(() => window.location.reload());
 					}}
-					className="btn btn-warning"
+					className="mt-5 border-4 bg-green-300 border-gray-300"
 				>
 					Sign out!
 				</button>
