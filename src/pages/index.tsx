@@ -17,6 +17,22 @@ import Highlights from '../components/highlights';
 import TopDownloads from '../components/topDownloads';
 import Display from '../components/display';
 import fetch from 'isomorphic-unfetch';
+import { useSnackbar } from 'notistack';
+import Confetti from 'react-dom-confetti';
+
+const config = {
+	angle: '122',
+	spread: 360,
+	startVelocity: 40,
+	elementCount: 70,
+	dragFriction: 0.12,
+	duration: 3000,
+	stagger: 3,
+	width: '10px',
+	height: '10px',
+	perspective: '500px',
+	colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a'],
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
 	const { pics, resp, popu, feat, _csrf } = await fetch(
@@ -52,6 +68,8 @@ export default function Home({
 	const [visible, setVisible] = useState<boolean>(false);
 	const [lmao, setToken] = useToken();
 	const [banner, setBanner] = useState(true);
+	const [confetti, setConfetti] = useState(false);
+	const { enqueueSnackbar } = useSnackbar();
 
 	const observer: MutableRefObject<any> = useRef();
 	const Loading = useCallback((node) => {
@@ -80,6 +98,53 @@ export default function Home({
 			<main>
 				<Layout>
 					{banner ? <Banner /> : ''}
+					<div className="container mx-auto px-4">
+						<div className="bg-teal-300 text-center lg:py-4 md:py-4 lg:px-4 lg:rounded md:rounded sm:rounded">
+							<span className="float-left">🎄 </span>
+							<span className="float-left">🎄 </span>
+							<span className="float-left">🎄 </span>
+							<div
+								className="p-2 bg-green-500 items-center text-indigo-100 leading-none lg:rounded-full md:rounded-full flex lg:inline-flex  md:inline-flex"
+								role="alert"
+							>
+								<span
+									className="font-semibold mr-2 text-left flex-auto cursor-pointer"
+									onClick={() => {
+										setConfetti(!confetti);
+										setTimeout(() => {
+											setConfetti(false);
+										}, 3000);
+									}}
+								>
+									Happy New Year Gamers!
+								</span>{' '}
+							</div>
+							<span className="float-right">🎄 </span>
+							<span className="float-right">🎄 </span>
+							<span className="float-right">🎄 </span>
+							<Confetti
+								active={confetti}
+								config={{
+									angle: 122,
+									spread: 360,
+									startVelocity: 40,
+									elementCount: 70,
+									dragFriction: 0.12,
+									duration: 3000,
+									stagger: 3,
+									width: '15px',
+									height: '15px',
+									colors: [
+										'#a864fd',
+										'#29cdff',
+										'#78ff44',
+										'#ff718d',
+										'#fdff6a',
+									],
+								}}
+							/>
+						</div>
+					</div>
 					<Carousel pics={pics} />
 					<Highlights feat={feat} />
 					<TopDownloads popu={popu} />
