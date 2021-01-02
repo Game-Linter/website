@@ -122,27 +122,29 @@ export default function Home({
 							<span className="float-right">🎄 </span>
 							<span className="float-right">🎄 </span>
 							<span className="float-right">🎄 </span>
-							<Confetti
-								active={confetti}
-								config={{
-									angle: 122,
-									spread: 360,
-									startVelocity: 40,
-									elementCount: 70,
-									dragFriction: 0.12,
-									duration: 3000,
-									stagger: 3,
-									width: '15px',
-									height: '15px',
-									colors: [
-										'#a864fd',
-										'#29cdff',
-										'#78ff44',
-										'#ff718d',
-										'#fdff6a',
-									],
-								}}
-							/>
+							<div className="flex justify-center">
+								<Confetti
+									active={confetti}
+									config={{
+										angle: 122,
+										spread: 360,
+										startVelocity: 40,
+										elementCount: 70,
+										dragFriction: 0.12,
+										duration: 3000,
+										stagger: 3,
+										width: '15px',
+										height: '15px',
+										colors: [
+											'#a864fd',
+											'#29cdff',
+											'#78ff44',
+											'#ff718d',
+											'#fdff6a',
+										],
+									}}
+								/>
+							</div>
 						</div>
 					</div>
 					<Carousel pics={pics} />
