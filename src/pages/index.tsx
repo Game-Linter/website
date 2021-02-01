@@ -19,6 +19,7 @@ import Display from '../components/display';
 import fetch from 'isomorphic-unfetch';
 import { useSnackbar } from 'notistack';
 import Confetti from 'react-dom-confetti';
+import MusicBot from '../components/musicbot';
 
 const config = {
 	angle: '122',
@@ -97,7 +98,8 @@ export default function Home({
 			<HeadElement token={token} index />
 			<main>
 				<Layout>
-					{banner ? <Banner /> : ''}
+					<MusicBot />
+					{/* {banner ? <Banner /> : ''} */}
 					<div className="container mx-auto px-4">
 						<div className="bg-teal-300 text-center lg:py-4 md:py-4 lg:px-4 lg:rounded md:rounded sm:rounded">
 							<span className="float-left">🎄 </span>
