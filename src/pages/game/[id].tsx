@@ -371,9 +371,9 @@ export default ({
 							>
 								<path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
 							</svg>
-							<span>Free Download</span>
+							<span>Download</span>
 						</button>
-						<a
+						{/* <a
 							href={'https://www.g2a.com/search?query=' + kebabTitle}
 							type="button"
 							className="bg-green-500 hover:bg-green-600 font-bold py-2 px-4 rounded inline-flex items-center mr-4 mb-4"
@@ -387,7 +387,7 @@ export default ({
 								<path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
 							</svg>
 							<span>Buy Game</span>
-						</a>
+						</a> */}
 					</div>
 					<hr style={{ backgroundColor: 'lightgray', marginBottom: '1em' }} />
 					<div className="row">
