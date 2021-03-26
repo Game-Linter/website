@@ -19,7 +19,7 @@ const Display = ({
 			{visible ? (
 				<section className="text-gray-700 body-font">
 					<div>
-						<h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
+						<h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900 mt-16">
 							All Games 🎲 🕹️
 						</h1>
 						<div className="h-1 w-20 bg-indigo-500 rounded mb-8"></div>
