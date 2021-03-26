@@ -341,7 +341,7 @@ export default ({
 										></iframe>
 									</div>
 								</div>
-								<div className="lg:w-6/6 mx-auto mt-8 w-full">
+								{/* <div className="lg:w-6/6 mx-auto mt-8 w-full">
 									<div className="rounded-lg h-auto overflow-hidden wtf-lg">
 										<iframe
 											width="1010"
@@ -353,7 +353,7 @@ export default ({
 											className="mx-auto"
 										></iframe>
 									</div>
-								</div>
+								</div> */}
 							</div>
 						</section>
 					</div>
