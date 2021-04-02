@@ -47,7 +47,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 	return {
 		props: {
 			pics,
-			token: _csrf,
+			token: _csrf || null,
 			resp,
 			popu,
 			feat,
