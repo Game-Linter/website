@@ -100,7 +100,7 @@ export default function Home({
 				<Layout>
 					<MusicBot />
 					{/* {banner ? <Banner /> : ''} */}
-					<div className="container mx-auto px-4">
+					{/* <div className="container mx-auto px-4">
 						<div className="bg-teal-300 text-center lg:py-4 md:py-4 lg:px-4 lg:rounded md:rounded sm:rounded">
 							<span className="float-left">🎄 </span>
 							<span className="float-left">🎄 </span>
@@ -148,7 +148,7 @@ export default function Home({
 								/>
 							</div>
 						</div>
-					</div>
+					</div> */}
 					<Carousel pics={pics} />
 					<Highlights feat={feat} />
 					<TopDownloads popu={popu} />
