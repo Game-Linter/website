@@ -39,7 +39,7 @@ const HeadElement = ({
 
 			<title>
 				{index
-					? 'Game-Linter'
+					? 'Game-Linter | Download Free Sharable Magnet Link Games'
 					: 'Game-Linter | Download ' +
 					  data.title +
 					  ' Handepicked Torrent file'}
