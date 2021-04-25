@@ -8,6 +8,7 @@ import HeadElement from '../../components/head';
 import fetch from 'isomorphic-unfetch';
 import Clipboard from 'react-clipboard.js';
 import { useSnackbar } from 'notistack';
+import ReactMarkdown from 'react-markdown';
 
 type IParamURI = { params: { id: string } };
 interface IReturnValue {
@@ -473,7 +474,7 @@ export default ({
 															{index + 1}
 														</span>
 														<span className="font-semibold mr-2 text-left flex-auto">
-															{value.content}
+															<ReactMarkdown>{value.content}</ReactMarkdown>
 														</span>
 													</div>
 												</div>
