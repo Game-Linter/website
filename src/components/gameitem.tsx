@@ -33,7 +33,7 @@ function GameItem(props: IProps) {
 					<a>
 						<picture>
 							<source
-								srcSet={props.value.i_back.replace('.jpeg', '.webp')}
+								srcSet={props.value.i_back?.replace('.jpeg', '.webp')}
 								type="image/webp"
 							/>
 							<source srcSet={props.value.i_back} type="image/jpeg" />

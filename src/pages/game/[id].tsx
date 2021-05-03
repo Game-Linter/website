@@ -242,7 +242,7 @@ export default ({
 								<div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
 									<picture>
 										<source
-											srcSet={i_thumbnail.replace('.jpeg', '.webp')}
+											srcSet={i_thumbnail?.replace('.jpeg', '.webp')}
 											type="image/webp"
 										/>
 										<source srcSet={i_thumbnail} type="image/jpeg" />
