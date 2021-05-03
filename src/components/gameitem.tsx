@@ -37,10 +37,10 @@ function GameItem(props: IProps) {
 								type="image/webp"
 							/>
 							<source srcSet={props.value.i_back} type="image/jpeg" />
-							{/* <source
+							<source
 								srcSet={props.value.WebpBack?.replace('jpeg', 'webp')}
 								type="image/webp"
-							/> */}
+							/>
 							<img
 								className="lg:h-48 md:h-36 w-full object-cover object-center"
 								src={props.value.i_back}
