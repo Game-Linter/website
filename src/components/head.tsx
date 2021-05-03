@@ -45,8 +45,9 @@ const HeadElement = ({
 					  data.title +
 					  ' Handepicked Torrent file'}
 			</title>
-			<link rel="shortcut icon" href="/logo.jpg" type="image/x-icon" />
+			<link rel="shortcut icon" href="//cdn.game-linter.com/media/logoalso.png" type="image/x-icon" />
 			<link rel="dns-prefetch" href="https://s3.game-linter.com/" />
+			<link rel="dns-prefetch" href="https://cdn.game-linter.com/" />
 			<meta
 				name="description"
 				content={
