@@ -32,11 +32,11 @@ function GameItem(props: IProps) {
 				<Link as={'/game/' + props.value.kebabTitle} href="/game/[id]">
 					<a>
 						<picture>
-							{/* <source
+							<source srcSet={props.value.i_back} type="image/jpeg" />
+							<source
 								srcSet={props.value.WebpBack?.replace('jpeg', 'webp')}
 								type="image/webp"
-							/> */}
-							<source srcSet={props.value.i_back} type="image/jpeg" />
+							/>
 							<img
 								className="lg:h-48 md:h-36 w-full object-cover object-center"
 								src={props.value.i_back}

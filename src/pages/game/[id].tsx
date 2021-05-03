@@ -242,11 +242,11 @@ export default ({
 								<div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
 									{i_thumbnail ? (
 										<picture>
-											{/* <source
+											<source srcSet={i_thumbnail} type="image/jpeg" />
+											<source
 												srcSet={WebpThumb.replace('.jpeg', '.webp')}
 												type="image/webp"
-											/> */}
-											<source srcSet={i_thumbnail} type="image/jpeg" />
+											/>
 											<img
 												className="object-cover object-center rounded"
 												alt={title}
