@@ -28,6 +28,7 @@ interface IReturnValue {
 	genre: string;
 	shortLink: string;
 	i_thumbnail: string;
+	i_back: string;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -82,6 +83,7 @@ export const getStaticProps: GetStaticProps<IReturnValue> = async ({
 		WebpThumb,
 		genre,
 		i_thumbnail,
+		i_back,
 	} = data.resp as IReturnValue;
 
 	// Pass data to the page via props
@@ -103,6 +105,7 @@ export const getStaticProps: GetStaticProps<IReturnValue> = async ({
 			genre,
 			shortLink,
 			i_thumbnail,
+			i_back,
 		},
 		revalidate: 1,
 	};
@@ -125,6 +128,7 @@ export default ({
 	genre,
 	shortLink,
 	i_thumbnail,
+	i_back,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const messageRef: RefObject<any> = React.createRef();
 
@@ -136,7 +140,7 @@ export default ({
 		if (localStorage.getItem('myTheme') === 'light') {
 			portalRoot.style.cssText +=
 				"background: url('" +
-				backgroundimg +
+				i_back +
 				"') no-repeat fixed center center !important; background-size: cover !important;-o-background-size: cover !important;-moz-background-size: cover !important;-webkit-background-size: cover !important;";
 			const blurRoot = document.getElementById('tobeblurred');
 			blurRoot.style.cssText +=
@@ -225,6 +229,7 @@ export default ({
 		genre,
 		shortLink,
 		i_thumbnail,
+		i_back,
 	};
 	return (
 		<>

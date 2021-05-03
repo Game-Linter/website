@@ -17,6 +17,7 @@ interface IReturnValue {
 	info: string;
 	WebpBack: string;
 	genre: string;
+	i_back: string;
 }
 
 interface IProps {
@@ -35,10 +36,10 @@ function GameItem(props: IProps) {
 								srcSet={props.value.WebpBack?.replace('jpeg', 'webp')}
 								type="image/webp"
 							/>
-							<source srcSet={props.value.backgroundimg} type="image/jpeg" />
+							<source srcSet={props.value.i_back} type="image/jpeg" />
 							<img
 								className="lg:h-48 md:h-36 w-full object-cover object-center"
-								src={props.value.backgroundimg}
+								src={props.value.i_back}
 								alt={props.value.title}
 							/>
 						</picture>
