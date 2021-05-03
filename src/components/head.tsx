@@ -100,7 +100,7 @@ const HeadElement = ({
 				property="og:image"
 				content={
 					index
-						? 'https://s3.game-linter.com/need-for-speed-heat-deluxe-edition-back.webp'
+						? 'https://cdn.game-linter.com/media/need-for-speed-heat-deluxe-edition-back.webp'
 						: data.backgroundimg
 				}
 			/>
