@@ -247,7 +247,7 @@ export default ({
 										/>
 										<source srcSet={i_thumbnail} type="image/jpeg" />
 										<source
-											srcSet={WebpThumb.replace('.jpeg', '.webp')}
+											srcSet={WebpThumb?.replace('.jpeg', '.webp')}
 											type="image/webp"
 										/>
 										<img
