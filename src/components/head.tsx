@@ -14,6 +14,7 @@ interface IReturnValue {
 	count: number;
 	WebpThumb: string;
 	info: string;
+	i_back: string;
 }
 
 const HeadElement = ({
@@ -101,7 +102,7 @@ const HeadElement = ({
 				content={
 					index
 						? 'https://cdn.game-linter.com/media/need-for-speed-heat-deluxe-edition-back.webp'
-						: data.backgroundimg
+						: data.i_back
 				}
 			/>
 			<meta
