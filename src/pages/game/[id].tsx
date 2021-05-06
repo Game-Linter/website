@@ -23,7 +23,7 @@ interface IReturnValue {
 	kebabTitle: string;
 	comments: { content: string }[];
 	count: number;
-	WebpThumb: string;
+	// WebpThumb: string;
 	info: string;
 	genre: string;
 	shortLink: string;
@@ -80,7 +80,7 @@ export const getStaticProps: GetStaticProps<IReturnValue> = async ({
 		thumbnail,
 		title,
 		trailerlink,
-		WebpThumb,
+		// WebpThumb,
 		genre,
 		i_thumbnail,
 		i_back,
@@ -100,7 +100,7 @@ export const getStaticProps: GetStaticProps<IReturnValue> = async ({
 			thumbnail,
 			title,
 			trailerlink,
-			WebpThumb,
+			// WebpThumb,
 			info: data.info,
 			genre,
 			shortLink,
@@ -123,7 +123,7 @@ export default ({
 	size,
 	title,
 	trailerlink,
-	WebpThumb,
+	// WebpThumb,
 	info,
 	genre,
 	shortLink,
@@ -224,7 +224,7 @@ export default ({
 		size,
 		title,
 		trailerlink,
-		WebpThumb,
+		// WebpThumb,
 		info,
 		genre,
 		shortLink,
@@ -246,10 +246,10 @@ export default ({
 											type="image/webp"
 										/>
 										<source srcSet={i_thumbnail} type="image/jpeg" />
-										<source
+										{/* <source
 											srcSet={WebpThumb?.replace('.jpeg', '.webp')}
 											type="image/webp"
-										/>
+										/> */}
 										<img
 											className="object-cover object-center rounded"
 											alt={title}

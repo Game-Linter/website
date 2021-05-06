@@ -13,7 +13,7 @@ interface IReturnValue {
 	kebabTitle: string;
 	comments: { content: string }[];
 	count: number;
-	WebpThumb: string;
+	// WebpThumb: string;
 	info: string;
 	WebpBack: string;
 	genre: string;
