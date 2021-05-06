@@ -65,7 +65,9 @@ const Form = ({ name }) => {
 		const result = await res.json();
 		if (result.status === 201) {
 			enqueueSnackbar('Success,  Game published');
-			window.location.reload();
+			setBackgroundDone(false);
+			setThumbnailDone(false);
+			// window.location.reload();
 		}
 	};
 
