@@ -85,7 +85,7 @@ function Login({
 
 	return (
 		<Layout>
-			{!isLogged ? (
+			{isLogged ? (
 				<Form name={name} />
 			) : (
 				<LoginForm
