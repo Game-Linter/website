@@ -1,19 +1,23 @@
-import axios from 'axios';
 import {
 	useState,
 	useEffect,
 	FormEventHandler,
 	MouseEventHandler,
+	ChangeEventHandler,
 } from 'react';
-import qs from 'querystring';
 import { useSnackbar } from 'notistack';
+import { AnonymousCredential, BlobServiceClient } from '@azure/storage-blob';
+import { genRandomName } from '../actions/genName';
 
 const Form = ({ name }) => {
 	const [Thumbnail, setThumbnail] = useState('');
 	const [background, setbackground] = useState('');
+	const [blobFile, setBlobFile] = useState<File | null>(null);
 	const [thumbnail_done, setThumbnailDone] = useState<boolean>(false);
 	const [background_done, setBackgroundDone] = useState<boolean>(false);
-	const { enqueueSnackbar } = useSnackbar();
+	const [code, setCode] = useState<string>('');
+	const [typeofupload, setTypeofUpload] = useState<string>('background');
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 	const submitGame: FormEventHandler<HTMLFormElement> = async (event: any) => {
 		event.preventDefault();
@@ -105,6 +109,66 @@ const Form = ({ name }) => {
 		}
 	};
 
+	async function getSasToken(): Promise<any> {
+		const res = await fetch(
+			`https://upload.game-linter.com/api/upload-blob?code=${code}`,
+			{
+				mode: 'cors',
+			}
+		);
+
+		return await res.json();
+	}
+
+	const uploadImageBlob = async (event) => {
+		if (!blobFile) {
+			return;
+		}
+		const { token } = await getSasToken();
+		const destinationName = await genRandomName(blobFile, token);
+		const blobServiceClient = new BlobServiceClient(
+			`https://gamelinterstorage.blob.core.windows.net?${token}`,
+			new AnonymousCredential()
+		);
+
+		const containerService = blobServiceClient.getContainerClient('media');
+		const blobService = containerService.getBlockBlobClient(destinationName);
+		const id = enqueueSnackbar('Uploading...', {
+			autoHideDuration: 1000 * 10,
+		});
+		blobService
+			.uploadBrowserData(blobFile, {
+				blobHTTPHeaders: {
+					blobContentType: blobFile.type,
+				},
+			})
+			.then((res) => {
+				closeSnackbar(id);
+				enqueueSnackbar('Published image', {
+					variant: 'success',
+				});
+
+				if (typeofupload === 'background') {
+					setBackgroundDone(true);
+					setbackground(`https://cdn.game-linter.com/media/${destinationName}`);
+				} else {
+					setThumbnailDone(true);
+					// setBackgroundDone(true);
+					setThumbnail(`https://cdn.game-linter.com/media/${destinationName}`);
+				}
+				// console.log(res._response.status);
+			})
+			.catch((err) => {
+				enqueueSnackbar('Failed', {
+					variant: 'warning',
+				});
+			});
+	};
+
+	useEffect(() => {
+		setCode('Zrokzh20Dhr46ImaLgMmoSWlVAEjPFyY1JOsG/QY2wtnJ5JlpkY8SA==');
+	}, []);
+
 	return (
 		<div>
 			<h1 className="font-sans text-lg flex justify-center ">
@@ -129,7 +193,7 @@ const Form = ({ name }) => {
 						''
 					)}
 					<input
-						className="appearance-none bg-transparent border border-1 flex text-gray-700 mr-3 mt-2 py-1 px-2 leading-tight focus:outline-none"
+						className="appearance-none bg-transparent border border-1 flex text-gray-700 mr-3 mt-2 py-1 px-2 leading-tight focus:outline-none w-full md:w-1/2"
 						type="text"
 						placeholder="Background Online URL"
 						aria-label="Full name"
@@ -157,7 +221,7 @@ const Form = ({ name }) => {
 						''
 					)}
 					<input
-						className="appearance-none bg-transparent border border-1 flex text-gray-700 mr-3 mt-2 py-1 px-2 leading-tight focus:outline-none"
+						className="appearance-none bg-transparent border border-1 flex text-gray-700 mr-3 mt-2 py-1 px-2 leading-tight focus:outline-none w-full md:w-1/2"
 						type="text"
 						placeholder="Thumbnail Online URL"
 						aria-label="Full name"
@@ -175,6 +239,63 @@ const Form = ({ name }) => {
 					>
 						{thumbnail_done ? 'Done !!!' : 'Upload Image'}
 					</button>
+				</div>
+				<div className="w-full md:w-1/2 flex mx-auto mt-5">
+					<input
+						className="appearance-none bg-transparent border border-1 flex text-gray-700 mr-3 mt-2 py-1 px-2 leading-tight focus:outline-none w-full md:w-1/2"
+						type="file"
+						placeholder="Background Online URL"
+						aria-label="Full name"
+						name="background"
+						onChange={(e) => {
+							setBackgroundDone(false);
+							setThumbnailDone(false);
+							console.log(e.target.files[0]);
+							setBlobFile(e.target.files[0]);
+							return e;
+						}}
+					/>
+					<div className="flex">
+						<button
+							className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded mt-2 mr-4"
+							type="button"
+							onClick={uploadImageBlob}
+							name="upload_background"
+							disabled={background_done ? true : false}
+						>
+							{background_done ? 'Done !!!' : 'Upload Image'}
+						</button>
+						<div className="mt-5">
+							<div
+								className="flex"
+								onChange={(e: any) => {
+									console.log(e.target.value);
+									setTypeofUpload(e.target.value);
+									return e;
+								}}
+							>
+								<input
+									type="radio"
+									id="thumbnail"
+									name="genre"
+									defaultValue="thumbnail"
+									className="mr-4 mt-1"
+								/>
+								<label htmlFor="thumbnail" className="mr-3">
+									Thumbnail
+								</label>
+								<input
+									type="radio"
+									id="background"
+									name="genre"
+									defaultValue="background"
+									className="mr-4 mt-1"
+									defaultChecked={true}
+								/>
+								<label htmlFor="background">Background</label>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div className="block mt-4 justify-center mx-auto">
 					<h1 className="font-semibold text-2xl text-center underline mb-4">
