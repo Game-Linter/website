@@ -1,58 +1,106 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import {
+	useState,
+	useEffect,
+	FormEventHandler,
+	MouseEventHandler,
+} from 'react';
 import qs from 'querystring';
 import { useSnackbar } from 'notistack';
 
 const Form = ({ name }) => {
-	const [title, setTitle] = useState('');
-	const [size, setsize] = useState(undefined);
-	const [Genre, setGenre] = useState('');
-	const [magnetLink, setmagnetLink] = useState('');
-	const [review, setreview] = useState(undefined);
 	const [Thumbnail, setThumbnail] = useState('');
 	const [background, setbackground] = useState('');
-	const [trailer, settrailer] = useState('');
-	const [NumberofFiles, setNumberofFiles] = useState(undefined);
-	const [money_link, setMoney_link] = useState('');
+	const [thumbnail_done, setThumbnailDone] = useState<boolean>(false);
+	const [background_done, setBackgroundDone] = useState<boolean>(false);
 	const { enqueueSnackbar } = useSnackbar();
 
-	const HandleSubmit = (event: any) => {
+	const submitGame: FormEventHandler<HTMLFormElement> = async (event: any) => {
 		event.preventDefault();
-		axios
-			.post(
-				'https://api.game-linter.com/add-game',
-				qs.stringify({
-					title,
-					size,
-					magnetLink,
-					Genre,
-					Thumbnail,
-					review,
-					background,
-					trailer,
-					NumberofFiles,
-					money_link,
-				}),
-				{
-					timeout: 5000,
-					withCredentials: true,
-				}
-			)
-			.then(
-				() => {
-					enqueueSnackbar('Game added, successfuly');
-					setTimeout(() => {
-						window.location.href = '/';
-					}, 1200);
-				},
-				(e) => {
-					e.response.data.errors.map((error) => {
-						enqueueSnackbar(error.message, {
-							variant: 'warning',
-						});
-					});
-				}
-			);
+
+		if (!thumbnail_done && !background_done) {
+			enqueueSnackbar('Upload images first');
+			return;
+		}
+
+		const api_url = 'https://api.game-linter.com/add-game';
+
+		const {
+			title,
+			size,
+			magnetLink,
+			genre,
+			thumbnail,
+			review,
+			background,
+			trailer,
+			NumberofFiles,
+		} = event.target;
+
+		const res = await fetch(api_url, {
+			body: JSON.stringify({
+				title: title.value,
+				size: size.value,
+				magnetLink: magnetLink.value,
+				Genre: genre.value,
+				Thumbnail: thumbnail.value,
+				review: review.value,
+				background: background.value,
+				trailer: trailer.value,
+				NumberofFiles: NumberofFiles.value,
+				money_link: undefined,
+			}),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+			credentials: 'include',
+		}).catch((err) => {
+			enqueueSnackbar('Failed to submit Metadata', {
+				variant: 'warning',
+			});
+			return err;
+		});
+
+		const result = await res.json();
+		if (result.status === 201) {
+			enqueueSnackbar('Success,  Game published');
+			window.location.reload();
+		}
+	};
+
+	const submitImage: MouseEventHandler<HTMLButtonElement> = async (event) => {
+		const button_name = event.currentTarget.name;
+		const res = await fetch('https://file.game-linter.com/api/v1/upload_file', {
+			body: JSON.stringify({
+				file_origin:
+					button_name === 'upload_thumbnail' ? Thumbnail : background,
+			}),
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json',
+			},
+		}).catch((err) => {
+			enqueueSnackbar('Failed to upload image', {
+				variant: 'warning',
+			});
+			console.log(err);
+			return err;
+		});
+
+		const result = await res.json();
+
+		if (result.status === 200) {
+			if (button_name === 'upload_thumbnail') {
+				// console.log(result);
+				setThumbnailDone(true);
+				setThumbnail(result.url);
+			} else {
+				// console.log(result);
+				setBackgroundDone(true);
+				setbackground(result.url);
+			}
+		}
 	};
 
 	return (
@@ -61,175 +109,216 @@ const Form = ({ name }) => {
 				{'Welcome ' + name + ' 💖.'}
 			</h1>
 			<form
-				onSubmit={HandleSubmit}
-				className="grid grid-cols-2 border border-1 border-black"
+				onSubmit={submitGame}
+				className="border-4 border-teal-500 rounded-md p-4"
 			>
-				<div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-					<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-						{' '}
-						<label>Title</label>
-						<input
-							value={title}
-							onChange={(event) => setTitle(event.target.value)}
-							name="title"
-							type="text"
-							className="form-control"
-							id="inputEmail4"
-							placeholder="Title"
-							required
-						/>{' '}
-					</div>
-					<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-						{' '}
-						<label>Size in GB</label>
-						<input
-							value={size}
-							onChange={(event) => setsize(event.target.value)}
-							name="size"
-							type="text"
-							className="form-control"
-							id="inputPassword4"
-							placeholder="size"
-							required
-						/>{' '}
-					</div>
-				</div>
-				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-					{' '}
-					<label>Genre</label>
+				<h2 className="text-center mx-auto  w-full  text-2xl underline font-mono">
+					Game-Linter Console.
+				</h2>
+				<p className="text-center">adding a new game huh!</p>
+				<div className="flex mt-5 justify-center">
+					{background_done ? (
+						<img
+							src={background}
+							className="w-64 h-32 rounded-lg border-2 border-red-300 shadow-xl"
+							alt=""
+						/>
+					) : (
+						''
+					)}
 					<input
-						value={Genre}
-						onChange={(event) => setGenre(event.target.value)}
-						name="genre"
+						className="appearance-none bg-transparent border border-1 flex text-gray-700 mr-3 mt-2 py-1 px-2 leading-tight focus:outline-none"
 						type="text"
-						className="form-control"
-						id="inputAddress"
-						placeholder="game genre"
-						required
-					/>{' '}
-				</div>
-				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-					{' '}
-					<label>Number of files</label>
-					<input
-						value={NumberofFiles}
-						onChange={(event) => setNumberofFiles(event.target.value)}
-						name="files"
-						type="number"
-						className="form-control"
-						id="inputAddress2"
-						placeholder="in numbers..."
-						required
-					/>{' '}
-				</div>
-				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-					{' '}
-					<label>
-						<b>Magnet</b> link
-					</label>
-					<input
-						value={magnetLink}
-						onChange={(event) => setmagnetLink(event.target.value)}
-						name="magnetlink"
-						type="text"
-						className="form-control"
-						id="inputAddress2"
-						placeholder=""
-						required
-						autoComplete="off"
-					/>{' '}
-				</div>
-				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-					{' '}
-					<label>Review</label>
-					<input
-						value={review}
-						onChange={(event) => setreview(event.target.value)}
-						name="review"
-						max="100"
-						min="0"
-						type="number"
-						className="form-control"
-						id="inputAddress2"
-						required
-						placeholder="in percent..."
-					/>{' '}
-				</div>
-				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-					{' '}
-					<label>Thumbnail link</label>
-					<input
-						value={Thumbnail}
-						onChange={(event) => setThumbnail(event.target.value)}
-						name="thumbnail"
-						type="text"
-						className="form-control"
-						id="inputAddress2"
-						required
-						placeholder="link"
-						autoComplete="off"
-					/>{' '}
-				</div>
-				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-					{' '}
-					<label>background link</label>
-					<input
+						placeholder="Background Online URL"
+						aria-label="Full name"
+						name="background"
 						value={background}
-						onChange={(event) => setbackground(event.target.value)}
-						name="backgroundimg"
-						type="text"
-						className="form-control"
-						id="inputAddress2"
-						required
-						placeholder="link"
-						autoComplete="off"
-					/>{' '}
-				</div>
-				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-					{' '}
-					<label>Money Link</label>
+						onChange={(e) => setbackground(e.target.value)}
+						disabled={background_done}
+					/>
+					<button
+						className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded mt-2 mr-4"
+						type="button"
+						onClick={submitImage}
+						name="upload_background"
+						disabled={background_done}
+					>
+						{background_done ? 'Done !!!' : 'Upload Image'}
+					</button>
+					{background_done ? (
+						<img
+							src={Thumbnail}
+							className="w-64 h-32 rounded-lg border-2 border-red-300 shadow-xl"
+							alt=""
+						/>
+					) : (
+						''
+					)}
 					<input
-						value={money_link}
-						onChange={(event) => setMoney_link(event.target.value)}
-						name="backgroundimg"
+						className="appearance-none bg-transparent border border-1 flex text-gray-700 mr-3 mt-2 py-1 px-2 leading-tight focus:outline-none"
 						type="text"
-						className="form-control"
-						id="inputAddress2"
-						placeholder="link"
-						autoComplete="off"
-					/>{' '}
+						placeholder="Thumbnail Online URL"
+						aria-label="Full name"
+						name="thumbnail"
+						value={Thumbnail}
+						onChange={(e) => setThumbnail(e.target.value)}
+						disabled={thumbnail_done}
+					/>
+					<button
+						className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded mt-2"
+						type="button"
+						onClick={submitImage}
+						name="upload_thumbnail"
+						disabled={thumbnail_done}
+					>
+						{thumbnail_done ? 'Done !!!' : 'Upload Image'}
+					</button>
 				</div>
-				<div className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-					{' '}
-					<label>Trailer Link</label>
+				<div className="block mt-4 justify-center mx-auto">
+					<h1 className="font-semibold text-2xl text-center underline mb-4">
+						Game Metadata
+					</h1>
+					<div className="flex flex-wrap">
+						<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+							<label
+								className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+								htmlFor="grid-first-name"
+							>
+								Game title
+							</label>
+							<input
+								className="appearance-none block w-full bg-gray-200 text-gray-700 border border-green-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+								id="grid-first-name"
+								type="text"
+								placeholder="GTA"
+								name="title"
+							/>
+						</div>
+						<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+							<label
+								className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+								htmlFor="grid-first-name"
+							>
+								Game size in GB
+							</label>
+							<input
+								className="appearance-none block w-full bg-gray-200 text-gray-700 border border-green-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+								id="grid-first-name"
+								type="text"
+								placeholder="5"
+								name="size"
+							/>
+						</div>
+						<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+							<label
+								className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+								htmlFor="grid-first-name"
+							>
+								Magnet Link
+							</label>
+							<input
+								className="appearance-none block w-full bg-gray-200 text-gray-700 border border-green-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+								id="grid-first-name"
+								type="text"
+								placeholder="magnet:xtr"
+								name="magnetLink"
+							/>
+						</div>
+						<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+							<label
+								className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+								htmlFor="grid-first-name"
+							>
+								Genre
+							</label>
+							<input
+								className="appearance-none block w-full bg-gray-200 text-gray-700 border border-green-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+								id="grid-first-name"
+								type="text"
+								placeholder="5"
+								name="genre"
+							/>
+						</div>
+						<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+							<label
+								className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+								htmlFor="grid-first-name"
+							>
+								Reviews
+							</label>
+							<input
+								className="appearance-none block w-full bg-gray-200 text-gray-700 border border-green-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+								id="grid-first-name"
+								type="text"
+								placeholder="60"
+								name="review"
+							/>
+						</div>
+						<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+							<label
+								className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+								htmlFor="grid-first-name"
+							>
+								Trailer
+							</label>
+							<input
+								className="appearance-none block w-full bg-gray-200 text-gray-700 border border-green-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+								id="grid-first-name"
+								type="text"
+								placeholder="https://youtube.com/..."
+								name="trailer"
+							/>
+						</div>
+						<div className="w-1/2 mx-auto px-3 mb-6 md:mb-0">
+							<label
+								className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+								htmlFor="grid-first-name"
+							>
+								Number Of files
+							</label>
+							<input
+								className="appearance-none block w-full bg-gray-200 text-gray-700 border border-green-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+								id="grid-first-name"
+								type="text"
+								placeholder="5"
+								name="NumberofFiles"
+							/>
+						</div>
+					</div>
+				</div>
+				{/* 
+				<button
+					className="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded"
+					type="button"
+				>
+					Cancel
+				</button>
+
+				<div>
 					<input
-						value={trailer}
-						onChange={(event) => settrailer(event.target.value)}
-						name="trailerlink"
+						className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
 						type="text"
-						className="form-control"
-						id="inputAddress2"
-						required
-						placeholder="link"
-						autoComplete="off"
-					/>{' '}
-				</div>
+						placeholder="Jane Doe"
+						aria-label="Full name"
+					/>
+					<button
+						className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+						type="button"
+					>
+						Sign Up
+					</button>
+					<button
+						className="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded"
+						type="button"
+					>
+						Cancel
+					</button>
+				</div> */}
 				<button
 					type="submit"
-					className="mt-5 border-4 bg-blue-300 border-gray-300"
+					className="bg-blue-500 p-4 rounded text-gray-100 justify-center flex mx-auto "
 				>
-					Done!
-				</button>{' '}
-				<button
-					onClick={(event) => {
-						event.preventDefault();
-						axios
-							.get('https://api.game-linter.com/api/v1/signout', {})
-							.then(() => window.location.reload());
-					}}
-					className="mt-5 border-4 bg-green-300 border-gray-300"
-				>
-					Sign out!
+					Submit Meta Data
 				</button>
 			</form>
 		</div>
