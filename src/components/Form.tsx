@@ -81,6 +81,7 @@ const Form = ({ name }) => {
 			body: JSON.stringify({
 				file_origin:
 					button_name === 'upload_thumbnail' ? Thumbnail : background,
+				type: button_name === 'upload_thumbnail' ? 'front' : 'back',
 			}),
 			method: 'POST',
 			headers: {
