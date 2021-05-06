@@ -286,7 +286,7 @@ const Form = ({ name }) => {
 								</label>
 								<input
 									type="radio"
-									id="background"
+									id="genre_choice"
 									name="genre_choice"
 									defaultValue="background"
 									className="mr-4 mt-1"
