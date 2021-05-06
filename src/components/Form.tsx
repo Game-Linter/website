@@ -276,7 +276,7 @@ const Form = ({ name }) => {
 							>
 								<input
 									type="radio"
-									id="thumbnail"
+									id="thumbnail_choice"
 									name="thumbnail_choice"
 									defaultValue="thumbnail"
 									className="mr-4 mt-1"
