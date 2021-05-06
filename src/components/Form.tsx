@@ -133,7 +133,17 @@ const Form = ({ name }) => {
 		);
 
 		const containerService = blobServiceClient.getContainerClient('media');
-		const blobService = containerService.getBlockBlobClient(destinationName);
+		let blobService;
+
+		if (typeofupload === 'background') {
+			blobService = containerService.getBlockBlobClient(
+				'background/' + destinationName
+			);
+		} else {
+			blobService = containerService.getBlockBlobClient(
+				'thumbnail/' + destinationName
+			);
+		}
 		const id = enqueueSnackbar('Uploading...', {
 			autoHideDuration: 1000 * 10,
 		});
@@ -151,11 +161,15 @@ const Form = ({ name }) => {
 
 				if (typeofupload === 'background') {
 					setBackgroundDone(true);
-					setbackground(`https://cdn.game-linter.com/media/${destinationName}`);
+					setbackground(
+						`https://cdn.game-linter.com/media/background/${destinationName}`
+					);
 				} else {
 					setThumbnailDone(true);
 					// setBackgroundDone(true);
-					setThumbnail(`https://cdn.game-linter.com/media/${destinationName}`);
+					setThumbnail(
+						`https://cdn.game-linter.com/media/thumbnail/${destinationName}`
+					);
 				}
 				// console.log(res._response.status);
 			})
