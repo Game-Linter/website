@@ -33,7 +33,7 @@ const Navbar: () => JSX.Element = () => {
 				<Link href="/">
 					<a className="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
 						<img
-							src="//cdn.game-linter.com/media/logoalso_x48.png"
+							src="//cdn.game-linter.com/media/cfb45179-ddef-45ce-81c1-a0e27dbf27ca/a9b5eb81719ebd9d6270e82a8091a393/PYZF3J1VO/nitMtGOEhF-1620236889.png"
 							alt=""
 							className="w-16 h-16 text-white p-2 rounded-full"
 						/>
