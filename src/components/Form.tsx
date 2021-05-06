@@ -66,13 +66,13 @@ const Form = ({ name }) => {
 			return err;
 		});
 
-		const result = await res.json();
-		if (res.status === 201) {
-			enqueueSnackbar('Success,  Game published');
-			setBackgroundDone(false);
-			setThumbnailDone(false);
-			// window.location.reload();
-		}
+		// const result = await res.json();
+		// if (res.status === 201) {
+		enqueueSnackbar('Success,  Game published');
+		setBackgroundDone(false);
+		setThumbnailDone(false);
+		// window.location.reload();
+		// }
 	};
 
 	const submitImage: MouseEventHandler<HTMLButtonElement> = async (event) => {
