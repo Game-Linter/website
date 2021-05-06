@@ -145,10 +145,10 @@ const Form = ({ name }) => {
 					>
 						{background_done ? 'Done !!!' : 'Upload Image'}
 					</button>
-					{background_done ? (
+					{thumbnail_done ? (
 						<img
 							src={Thumbnail}
-							className="w-64 h-32 rounded-lg border-2 border-red-300 shadow-xl"
+							className="w-32 h-64 rounded-lg border-2 border-red-300 shadow-xl"
 							alt=""
 						/>
 					) : (

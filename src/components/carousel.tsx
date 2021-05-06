@@ -22,10 +22,6 @@ const Carousel = ({ pics }: { pics: TResponse[] }) => {
 						<Link as={'/game/' + pics[0]?.kebabTitle} href="/game/[id]">
 							<a className="md:p-2 p-1 w-full">
 								<picture>
-									<source
-										srcSet={pics[0]?.webp.replace('.jpeg', '.webp')}
-										type="image/webp"
-									/>
 									<source srcSet={pics[0]?.img} type="image/jpeg" />
 									<img
 										alt={pics[0]?.title}
@@ -38,10 +34,10 @@ const Carousel = ({ pics }: { pics: TResponse[] }) => {
 						<Link as={'/game/' + pics[1]?.kebabTitle} href="/game/[id]">
 							<a className="md:p-2 p-1 w-full">
 								<picture>
-									<source
+									{/* <source
 										srcSet={pics[1]?.webp.replace('jpeg', 'webp')}
 										type="image/webp"
-									/>
+									/> */}
 									<source srcSet={pics[1]?.img} type="image/jpeg" />
 									<img
 										alt={pics[1]?.title}
@@ -58,10 +54,10 @@ const Carousel = ({ pics }: { pics: TResponse[] }) => {
 							<Link as={'/game/' + pics[2]?.kebabTitle} href="/game/[id]">
 								<a>
 									<picture>
-										<source
+										{/* <source
 											srcSet={pics[2]?.webp.replace('jpeg', 'webp')}
 											type="image/webp"
-										/>
+										/> */}
 										<source srcSet={pics[2]?.img} type="image/jpeg" />
 										<img
 											alt={pics[2]?.title}
@@ -76,10 +72,10 @@ const Carousel = ({ pics }: { pics: TResponse[] }) => {
 							<Link as={'/game/' + pics[3]?.kebabTitle} href="/game/[id]">
 								<a>
 									<picture>
-										<source
+										{/* <source
 											srcSet={pics[3]?.webp.replace('jpeg', 'webp')}
 											type="image/webp"
-										/>
+										/> */}
 										<source srcSet={pics[3]?.img} type="image/jpeg" />
 
 										<img
@@ -95,10 +91,10 @@ const Carousel = ({ pics }: { pics: TResponse[] }) => {
 							<Link as={'/game/' + pics[4]?.kebabTitle} href="/game/[id]">
 								<a>
 									<picture>
-										<source
+										{/* <source
 											srcSet={pics[4]?.webp.replace('jpeg', 'webp')}
 											type="image/webp"
-										/>
+										/> */}
 										<source srcSet={pics[4]?.img} type="image/jpeg" />
 
 										<img
