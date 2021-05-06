@@ -246,7 +246,7 @@ const Form = ({ name }) => {
 						type="file"
 						placeholder="Background Online URL"
 						aria-label="Full name"
-						name="background"
+						name="background_upload"
 						onChange={(e) => {
 							setBackgroundDone(false);
 							setThumbnailDone(false);
@@ -277,7 +277,7 @@ const Form = ({ name }) => {
 								<input
 									type="radio"
 									id="thumbnail"
-									name="genre"
+									name="thumbnail_choice"
 									defaultValue="thumbnail"
 									className="mr-4 mt-1"
 								/>
@@ -287,7 +287,7 @@ const Form = ({ name }) => {
 								<input
 									type="radio"
 									id="background"
-									name="genre"
+									name="genre_choice"
 									defaultValue="background"
 									className="mr-4 mt-1"
 									defaultChecked={true}
