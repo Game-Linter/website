@@ -296,7 +296,7 @@ const Form = ({ name }) => {
 									defaultValue="thumbnail"
 									className="mr-4 mt-1"
 								/>
-								<label htmlFor="thumbnail" className="mr-3">
+								<label htmlFor="toggle_image" className="mr-3">
 									Thumbnail
 								</label>
 								<input
@@ -307,7 +307,7 @@ const Form = ({ name }) => {
 									className="mr-4 mt-1"
 									defaultChecked={true}
 								/>
-								<label htmlFor="background">Background</label>
+								<label htmlFor="toggle_image">Background</label>
 							</div>
 						</div>
 					</div>
