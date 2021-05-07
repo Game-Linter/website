@@ -241,10 +241,10 @@ export default ({
 							<div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
 								<div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
 									<picture>
-										<source
+										{/* <source
 											srcSet={i_thumbnail?.replace('.jpeg', '.webp')}
 											type="image/webp"
-										/>
+										/> */}
 										<source srcSet={i_thumbnail} type="image/jpeg" />
 										{/* <source
 											srcSet={WebpThumb?.replace('.jpeg', '.webp')}
