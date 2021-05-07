@@ -91,7 +91,11 @@ const HeadElement = ({
 						  ' Handpicked Torrent file'
 				}
 			/>
-			<meta property="og:type" content="website" />
+			<meta property="og:image:width" content="1200" />
+			<meta property="og:image:height" content="600" />
+			<meta property="og:type" content="object" />
+			<meta property="og:type" content="object" />
+			{/* <meta property="og:type" content="website" /> */}
 			<meta
 				name="og:description"
 				content={
