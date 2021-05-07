@@ -292,7 +292,7 @@ const Form = ({ name }) => {
 								<input
 									type="radio"
 									id="toggle_thumbnail"
-									name="toggle_thumbnail"
+									name="toggle"
 									defaultValue="thumbnail"
 									className="mr-4 mt-1"
 								/>
@@ -302,7 +302,7 @@ const Form = ({ name }) => {
 								<input
 									type="radio"
 									id="toggle_background"
-									name="toggle_background"
+									name="toggle"
 									defaultValue="background"
 									className="mr-4 mt-1"
 									defaultChecked={true}
